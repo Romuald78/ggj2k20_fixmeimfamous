@@ -1,0 +1,37 @@
+{
+  "frames": [
+    {
+      "filename": "switch01",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 75,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+    {
+      "filename": "switch02",
+      "frame": {
+        "x": 75,
+        "y": 0,
+        "w": 75,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+    {
+      "filename": "switch03",
+      "frame": {
+        "x": 150,
+        "y": 0,
+        "w": 75,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false
+    }
+  ]
+}
