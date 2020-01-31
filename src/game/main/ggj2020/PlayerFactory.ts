@@ -25,12 +25,15 @@ export class PlayerFactory {
         //Sprite creation
         /////
 
-        let atlasName: string = teamId == 1 ? 'playerAtlas1' : 'playerAtlas1';
+        let atlasName: string = "atlas";
 
         let player = this.scene.add.sprite(initX, initY, atlasName);
         player.setScale(this.widthWU / player.width, this.heightWU / player.height);
         let gfxComp = new GfxGenericComponent<GameObjects.Image>(player, "gfx");
         entity.addComponent(gfxComp);
+        player.setTint(teamId == 1 ? 0xA0A0FF : 0xFFA0A0);
+
+
 
         // create animation object
         this.scene.anims.create({

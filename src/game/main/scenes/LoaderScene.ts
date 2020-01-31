@@ -1,5 +1,5 @@
-import {Scene} from "phaser";
-import {INTRO_SCENE_KEY} from "./IntroScene";
+import { Scene } from "phaser";
+import { INTRO_SCENE_KEY } from "./IntroScene";
 
 export const LOADER_SCENE_KEY: string = "LoaderScene";
 
@@ -16,11 +16,11 @@ export class LoaderScene extends Scene {
         // Get dimensions of the screen
         let W = this.game.canvas.width;
         let H = this.game.canvas.height;
-        let barW  = (W*3)/4;
-        let barH  = H/10;
-        let space = barH/7;
-        let refX  = (W-barW)/2;
-        let refY  = (H-barH)/2;
+        let barW = (W * 3) / 4;
+        let barH = H / 10;
+        let space = barH / 7;
+        let refX = (W - barW) / 2;
+        let refY = (H - barH) / 2;
 
         //------------------------------------------------------------------------
         // Create progress bar and text
@@ -30,8 +30,8 @@ export class LoaderScene extends Scene {
         progressBox.fillStyle(0x343434, 0.75);
         progressBox.fillRect(refX, refY, barW, barH);
 
-        var text = this.add.text(0,0, "Loading 100%", { fontFamily: 'Verdana', fontSize: 50 });
-        text.setPosition((W-text.width)/2,(H-text.height)/2);
+        var text = this.add.text(0, 0, "Loading 100%", { fontFamily: 'Verdana', fontSize: 50 });
+        text.setPosition((W - text.width) / 2, (H - text.height) / 2);
         text.setText("Loading 0%");
         text.setColor("#606060");
 
@@ -40,14 +40,14 @@ export class LoaderScene extends Scene {
         //------------------------------------------------------------------------
         this.load.on('progress', function (value) {
             progressBar.clear();
-            let red   = (1-value)*255;
-            let green = (  value)*255;
-            let blue  = 0;
-            let clr = (red<<16)+(green<<8)+blue;
+            let red = (1 - value) * 255;
+            let green = (value) * 255;
+            let blue = 0;
+            let clr = (red << 16) + (green << 8) + blue;
             progressBar.fillStyle(clr, 0.75);
-            progressBar.fillRect(refX+space, refY+space, (barW-2*space) * value, barH-2*space);
-            value = Math.round(value*100);
-            text.setText("Loading "+value+"%");
+            progressBar.fillRect(refX + space, refY + space, (barW - 2 * space) * value, barH - 2 * space);
+            value = Math.round(value * 100);
+            text.setText("Loading " + value + "%");
         });
 
         // Add files into a list in order to be displayed when all the loading process is finished
@@ -56,7 +56,7 @@ export class LoaderScene extends Scene {
             files.push(file.src);
         });
         this.load.on('complete', function () {
-            console.log('preload complete',files);
+            console.log('preload complete', files);
         });
 
         //------------------------------------------------------------------------
@@ -71,7 +71,7 @@ export class LoaderScene extends Scene {
         this.load.image('sky', 'assets/game/map/backgrounds/Sky.png');
 
         // PLAYER ANIMATION (ATLAS)
-        this.load.atlas('playerAtlas1', 'assets/game/characters/player_atlas.png', 'assets/game/characters/player.json');
+        this.load.atlas('atlas', 'assets/game/characters/player_atlas.png', 'assets/game/characters/player.json');
 
     }
 
