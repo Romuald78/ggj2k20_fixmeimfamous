@@ -181,6 +181,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">modules/module_0.png</key>
+            <key type="filename">modules/module_1.png</key>
+            <key type="filename">modules/module_2.png</key>
+            <key type="filename">modules/module_3.png</key>
             <key type="filename">player_back/player_back_0.png</key>
             <key type="filename">player_back/player_back_1.png</key>
             <key type="filename">player_back/player_back_2.png</key>
@@ -210,6 +214,7 @@
             <filename>player_side</filename>
             <filename>player_back</filename>
             <filename>player_front</filename>
+            <filename>modules</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
