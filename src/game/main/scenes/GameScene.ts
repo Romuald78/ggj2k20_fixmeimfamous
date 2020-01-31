@@ -94,7 +94,7 @@ export class GameScene extends Scene {
 
         // create players at appropriate locations with approprirate controllers !
         for (let i = -1; i < 3; i++) {
-            playerFactory.create(i * 200, i * 100, i, i % 2);
+            playerFactory.create(i * 200+200, i * 100+300, i, i % 2);
         }
 
         //----------------------------------------------

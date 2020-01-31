@@ -67,32 +67,11 @@ export class LoaderScene extends Scene {
         this.load.image('logoPhaser', 'assets/misc/logoPhaser.jpg');
         this.load.image('logoRPHStudio', 'assets/misc/logoRPHStudio.png');
 
-        //UI assets
-        this.load.image('ux-01', 'assets/game/ui/croco-logo.png');
-        this.load.image('ux-02', 'assets/game/ui/lose-image.png');
-        this.load.image('ux-03', 'assets/game/ui/start-screen-image.png');
-        this.load.image('ux-04', 'assets/game/ui/win-image.png');
-        this.load.image('ux-05', 'assets/game/ui/player/player-1.png');
-        this.load.image('ux-06', 'assets/game/ui/player/player-1-dead.png');
-        this.load.image('ux-07', 'assets/game/ui/player/player-2.png');
-        this.load.image('ux-08', 'assets/game/ui/player/player-2-dead.png');
-        this.load.image('ux-09', 'assets/game/ui/player/player-3.png');
-        this.load.image('ux-10', 'assets/game/ui/player/player-3-dead.png');
         // Background image (sky)
         this.load.image('sky', 'assets/game/map/backgrounds/Sky.png');
-        // map made with Tiled in JSON format
-        this.load.tilemapTiledJSON('map', 'assets/game/map/level01/leveldesign03.json');
-        // tiles in spritesheet
-        this.load.spritesheet('teamCroco3', 'assets/game/map/level01/teamCroco3.png', {frameWidth: 128, frameHeight: 128});
-        // lift spritesheet
-        this.load.spritesheet('liftSpriteSheet', 'assets/game/map/level01/teamCroco3.png', {
-            frameWidth: 128,
-            frameHeight: 128
-        });
+
         // PLAYER ANIMATION (ATLAS)
-        this.load.atlas('crocoAtlas', 'assets/game/characters/croco_atlas.png', 'assets/game/characters/croco.json');
-        // SWITCH ANIMATION (ATLAS)
-        this.load.atlas('switchAtlas', 'assets/game/map/level01/lift_switch.png', 'assets/game/map/level01/lift_switch.json');
+        this.load.atlas('playerAtlas1', 'assets/game/characters/player_atlas.png', 'assets/game/characters/player.json');
 
     }
 

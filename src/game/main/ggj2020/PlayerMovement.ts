@@ -6,7 +6,7 @@ import { TouchBodyComponent } from "../objects/components/TouchBodyComponent";
 
 export class PlayerMovement implements ScriptComponent {
 
-
+    private  MOVE_FORCE:number = 0.02;
 
     public enableControl = false;
 
@@ -25,6 +25,6 @@ export class PlayerMovement implements ScriptComponent {
         //Matter.Body.setAngularVelocity(this.playerBody, 0);
         let dx = -this.playerInput.getAnalogValue("WALK_LEFT") + this.playerInput.getAnalogValue("WALK_RIGHT");
         let dy = -this.playerInput.getAnalogValue("WALK_UP") + this.playerInput.getAnalogValue("WALK_DOWN");
-        Matter.Body.applyForce(this.playerBody, this.playerBody.position, Matter.Vector.create(dx, dy));
+        Matter.Body.applyForce(this.playerBody, this.playerBody.position, Matter.Vector.create(dx*this.MOVE_FORCE, dy*this.MOVE_FORCE));
     }
 }
