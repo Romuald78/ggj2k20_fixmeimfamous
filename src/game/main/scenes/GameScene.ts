@@ -1,3 +1,4 @@
+import { ModuleFactory } from './../ggj2020/ModuleFactory';
 import { phaserReactService } from "../../phaser/PhaserReactService";
 import { GameObjects, Scene } from "phaser";
 import * as EventEmitter from "eventemitter3";
@@ -93,9 +94,14 @@ export class GameScene extends Scene {
         let playerFactory = new PlayerFactory(this.ecsWorld, this);
 
         // create players at appropriate locations with approprirate controllers !
-        for (let i = -1; i < 3; i++) {
-            playerFactory.create(i * 200+200, i * 100+300, i, i % 2);
+        for (let i = 0; i < 4; i++) {
+            playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2);
         }
+
+        let moduleFactory = new ModuleFactory(this.ecsWorld, this);
+        /*for (let i = 0; i < 4; i++) {
+            moduleFactory.create(i + 1, i * 100 + 100, i * 20 + 150);
+        }*/
 
         //----------------------------------------------
         // Create MAP entity
