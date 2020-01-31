@@ -49,8 +49,8 @@ export class PhysicWorld {
         let world = Matter.World.create({
             gravity: {
                 x: 0,
-                y: 9.8, //9.8m/s2
-                scale: 0.001
+                y: 0, //9.8m/s2
+                scale: 1
             },
         });
         this.engine = Matter.Engine.create({world: world});
