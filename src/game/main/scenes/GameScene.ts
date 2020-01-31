@@ -1,21 +1,13 @@
-import {phaserReactService} from "../../phaser/PhaserReactService";
-import {GameObjects, Scene, Tilemaps} from "phaser";
+import { phaserReactService } from "../../phaser/PhaserReactService";
+import { GameObjects, Scene } from "phaser";
 import * as EventEmitter from "eventemitter3";
-import {GameCamera} from "../objects/GameCamera";
-import {ECSWorld} from "../ecs/system/ECSWorld";
-import {LiftFactory} from "../objects/factories/LiftFactory";
-import {Entity} from "../ecs/core/Entity";
-import {LiftMove} from "../objects/components/LiftMove";
-import {MapFactory} from "../objects/factories/MapFactory";
-import {MapLifts} from "../objects/components/MapLifts";
-import {Bound} from "../objects/components/Bound";
-import {GfxGenericComponent} from "../ecs/system/gfx/GfxGenericComponent";
-import {PlayerFactory} from "../objects/factories/PlayerFactory";
-import {PlayerMovement} from "../objects/components/PlayerMovement";
-import {PlayerSpikeInteraction} from "../objects/components/PlayerSpikeInteraction";
-import {Life} from "../objects/components/Life";
-import {PlayerEndOfLife} from "../objects/components/PlayerEndOfLife";
-import {InputComponent} from "../ecs/system/controls/InputComponent";
+import { GameCamera } from "../objects/GameCamera";
+import { ECSWorld } from "../ecs/system/ECSWorld";
+import { Entity } from "../ecs/core/Entity";
+import { GfxGenericComponent } from "../ecs/system/gfx/GfxGenericComponent";
+import { PlayerMovement } from "../ggj2020/PlayerMovement";
+import { Life } from "../objects/components/Life";
+import { PlayerFactory } from "../ggj2020/PlayerFactory";
 
 export const GAME_SCENE_KEY: string = "GameScene";
 
@@ -26,11 +18,8 @@ export class GameScene extends Scene {
     //gameMap: GameMap;
     private gameCam: GameCamera;
     private players: Entity[] = [];
-    private lifts: Entity[] = [];
 
-    private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private ecsWorld: ECSWorld;
-    private mapEntity: Entity;
 
 
     constructor() {
@@ -47,49 +36,12 @@ export class GameScene extends Scene {
         this.scene.start(GAME_SCENE_KEY);
     }
 
-    selectPlayer(playerNumber: number) {
-        this.players.forEach(player => {
-            let movState = player.getFirstComponentByName<PlayerMovement>(PlayerMovement.name);
-            movState.setInputState(false);
-        });
-
-        if (this.players[playerNumber]) {
-            let gfx = this.players[playerNumber].getFirstComponentByName<GfxGenericComponent<GameObjects.Image>>("gfx").getGfxObj();
-            let movState = this.players[playerNumber].getFirstComponentByName<PlayerMovement>(PlayerMovement.name);
-            let life = this.players[playerNumber].getFirstComponentByName<Life>(Life.name);
-            this.gameCam.startFollow(gfx).then(() => {
-                if (life.isAlive()) {
-                    movState.setInputState(true);
-                }
-            });
-        }
-
-    }
-
     displayWinScreen() {
         this.eventEmitter.emit("win", {});
     }
 
     displayLoseScreen() {
         this.eventEmitter.emit("lose", {});
-    }
-
-    killplayer(player: number) {
-        this.eventEmitter.emit("player_dead", player);
-        // check end game (looser)
-        if(this.hasLost()){
-            this.displayLoseScreen();
-        }
-    }
-
-    private hasLost():boolean {
-        let lost = true;
-        this.players.forEach( (p) => {
-            if( p.getFirstComponentByName<Life>(Life.name).isAlive()){
-                lost = false;
-            }
-        } );
-        return lost;
     }
 
     registerOnWinCallback(callback: () => void): () => void {
@@ -106,23 +58,16 @@ export class GameScene extends Scene {
         }
     }
 
-    registerOnPlayerDead(callback: (player: number) => void): () => void {
-        this.eventEmitter.on("player_dead", callback);
-        return () => {
-            this.eventEmitter.off("player_dead", callback);
-        }
-    }
-
     preload(): void {
     }
 
-    inputTest(){
-        window.addEventListener("gamepadconnected", (e:any) => {
+    inputTest() {
+        window.addEventListener("gamepadconnected", (e: any) => {
             console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
                 e.gamepad.index, e.gamepad.id,
                 e.gamepad.buttons.length, e.gamepad.axes.length);
         });
-        window.addEventListener("gamepaddisconnected", (e:any) => {
+        window.addEventListener("gamepaddisconnected", (e: any) => {
             console.log("Gamepad disconnected from index %d: %s",
                 e.gamepad.index, e.gamepad.id);
         });
@@ -142,11 +87,15 @@ export class GameScene extends Scene {
             removeListenerResizeEvent();
         });
 
-        let sky = this.add.sprite(0, 0, 'sky');
 
-        this.cameras.main.setZoom(0.5);
+        //this.cameras.main.setZoom(0.5);
 
-        //let playerFactory = new PlayerFactory(this.ecsWorld, this);
+        let playerFactory = new PlayerFactory(this.ecsWorld, this);
+
+        // create players at appropriate locations with approprirate controllers !
+        for (let i = -1; i < 3; i++) {
+            playerFactory.create(i * 200+200, i * 100+300, i, i % 2);
+        }
 
         //----------------------------------------------
         // Create MAP entity
@@ -159,14 +108,10 @@ export class GameScene extends Scene {
         // Lifts
         this.gameCam.setBounds(0, 0, 1000, 1000);
 
-        this.selectPlayer(0);
+        //phaserReactService.eventEmitter.emit("displayOverlay", true);
 
-        phaserReactService.eventEmitter.emit("displayOverlay",true);
-
-        // INTERACTIONS
-
-        let rules:Entity = this.ecsWorld.createEntity();
-        this.cameras.main.setBackgroundColor("#89fbf9")
+        //this.cameras.main.setBackgroundColor("#89fbf9")
+        this.cameras.main.setBackgroundColor("#000000")
 
         console.log("GameScene Created");
         phaserReactService.notifySceneReadyEvent(GAME_SCENE_KEY);

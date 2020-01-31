@@ -1,23 +1,22 @@
-import {Component} from "../../ecs/core/Component";
+import { Component } from "../../ecs/core/Component";
 import * as Matter from "matter-js";
-import {physicWorld} from "../../ecs/system/physics/PhysicWorld";
 
-export class TouchBodyComponent implements Component{
+export class TouchBodyComponent implements Component {
 
     private touchingGround = 0;
 
-    private touchObjects: {[id:string]:Matter.Body} = {};
+    private touchObjects: { [id: string]: Matter.Body } = {};
 
-    getTouchObjects(): {[id:string]:Matter.Body}{
+    getTouchObjects(): { [id: string]: Matter.Body } {
         return this.touchObjects;
     }
 
-    isTouchingGround():boolean{
-        return this.touchingGround>0;
+    isTouchingGround(): boolean {
+        return this.touchingGround > 0;
     }
 
-    constructor(aBody:Matter.Body) {
-        Matter.Events.on(physicWorld.engine, "collisionStart", (event) => {
+    constructor() {
+        /*Matter.Events.on(physicWorld.engine, "collisionStart", (event) => {
             event.pairs.forEach(pair => {
                 let bottomBody = pair.bodyA;
                 let otherBody  = pair.bodyB;
@@ -56,7 +55,7 @@ export class TouchBodyComponent implements Component{
                 }
             });
             this.touchingGround = Math.max(0, this.touchingGround);
-        });
+        });*/
     }
 
     getName(): string {

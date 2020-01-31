@@ -1,10 +1,78 @@
 {
   "frames": [
     {
-      "filename": "croco_idle01",
+      "filename": "player_idle01",
       "frame": {
         "x": 0,
         "y": 0,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+    {
+      "filename": "player_walkup01",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+    {
+      "filename": "player_walkup02",
+      "frame": {
+        "x": 325,
+        "y": 0,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+    {
+      "filename": "player_walkup03",
+      "frame": {
+        "x": 650,
+        "y": 0,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+
+
+    {
+      "filename": "player_walkdown01",
+      "frame": {
+        "x": 0,
+        "y": 160,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+    {
+      "filename": "player_walkdown02",
+      "frame": {
+        "x": 325,
+        "y": 160,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+    {
+      "filename": "player_walkdown03",
+      "frame": {
+        "x": 650,
+        "y": 160,
         "w": 325,
         "h": 160
       },
@@ -12,8 +80,9 @@
       "trimmed": false
     },
 
+
     {
-      "filename": "croco_walk01",
+      "filename": "player_walkleft01",
       "frame": {
         "x": 0,
         "y": 320,
@@ -24,7 +93,7 @@
       "trimmed": false
     },
     {
-      "filename": "croco_walk02",
+      "filename": "player_walkleft02",
       "frame": {
         "x": 325,
         "y": 320,
@@ -35,7 +104,7 @@
       "trimmed": false
     },
     {
-      "filename": "croco_walk03",
+      "filename": "player_walkleft03",
       "frame": {
         "x": 650,
         "y": 320,
@@ -45,8 +114,10 @@
       "rotated": false,
       "trimmed": false
     },
+
+
     {
-      "filename": "croco_walk04",
+      "filename": "player_walkright01",
       "frame": {
         "x": 0,
         "y": 480,
@@ -57,7 +128,7 @@
       "trimmed": false
     },
     {
-      "filename": "croco_walk05",
+      "filename": "player_walkright02",
       "frame": {
         "x": 325,
         "y": 480,
@@ -68,7 +139,7 @@
       "trimmed": false
     },
     {
-      "filename": "croco_walk06",
+      "filename": "player_walkright03",
       "frame": {
         "x": 650,
         "y": 480,
@@ -77,64 +148,9 @@
       },
       "rotated": false,
       "trimmed": false
-    },
-    {
-      "filename": "croco_walk07",
-      "frame": {
-        "x": 325,
-        "y": 0,
-        "w": 325,
-        "h": 160
-      },
-      "rotated": false,
-      "trimmed": false
-    },
-    {
-      "filename": "croco_walk08",
-      "frame": {
-        "x": 650,
-        "y": 0,
-        "w": 325,
-        "h": 160
-      },
-      "rotated": false,
-      "trimmed": false
-    },
-    {
-      "filename": "croco_walk09",
-      "frame": {
-        "x": 0,
-        "y": 160,
-        "w": 325,
-        "h": 160
-      },
-      "rotated": false,
-      "trimmed": false
-    },
-    {
-      "filename": "croco_walk10",
-      "frame": {
-        "x": 325,
-        "y": 160,
-        "w": 325,
-        "h": 160
-      },
-      "rotated": false,
-      "trimmed": false
-    },
-    {
-      "filename": "croco_walk11",
-      "frame": {
-        "x": 650,
-        "y": 160,
-        "w": 325,
-        "h": 160
-      },
-      "rotated": false,
-      "trimmed": false
-    }    
-    
-    
-    
+    }
+
+
+
   ]
 }
