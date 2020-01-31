@@ -21,8 +21,6 @@ class GameOverlay extends React.Component<{}, State> {
     public render() {
         return (
             <React.Fragment>
-                <PlayerSelect/>
-                <DrawerMenu/>
                 <WinLoseDialog/>
             </React.Fragment>
         );

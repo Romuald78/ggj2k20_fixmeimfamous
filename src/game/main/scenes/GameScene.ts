@@ -146,79 +146,27 @@ export class GameScene extends Scene {
 
         this.cameras.main.setZoom(0.5);
 
-
-        // Create cursors
-        //this.cursors = this.input.keyboard.createCursorKeys();
-        console.log(navigator.getGamepads());
-
-
-        /*ic.registerEvent("JUMP", (an,st)=>{
-            console.log("ACTION NAME = "+an+" / STATE = "+st);
-        })*/
-
-
-
-        let playerFactory = new PlayerFactory(this.ecsWorld, this);
-
-        //----------------------------------------------
-        // Create Lift entities
-        //----------------------------------------------
-        let liftFactory = new LiftFactory(this.ecsWorld, this);
+        //let playerFactory = new PlayerFactory(this.ecsWorld, this);
 
         //----------------------------------------------
         // Create MAP entity
         //----------------------------------------------
-        let mapFactory = new MapFactory(this.ecsWorld, this);
-        this.mapEntity = mapFactory.createMap(this.players, liftFactory);
-
-        this.players[0] = playerFactory.create(400,"right",0);
-        this.players[1] = playerFactory.create(650,"right",0);
-        this.players[2] = playerFactory.create(1150,"left",0);
+        //let mapFactory = new MapFactory(this.ecsWorld, this);
+        //this.mapEntity = mapFactory.createMap(this.players, liftFactory);
 
         this.gameCam = new GameCamera(this);
 
         // Lifts
-        this.lifts = this.mapEntity.getFirstComponentByName<MapLifts>(MapLifts.name).getLifts();
-        let mapBound = this.mapEntity.getFirstComponentByName<Bound>(Bound.name).getBound();
-        this.gameCam.setBounds(mapBound.x, mapBound.y, mapBound.width, mapBound.height);
-
-        sky.setScale(mapBound.width / 1920, mapBound.height / 1080);
-        sky.setOrigin(0, 0);
-        sky.setPosition(0, 0);
+        this.gameCam.setBounds(0, 0, 1000, 1000);
 
         this.selectPlayer(0);
 
-
-        // Make the lifts go up at start
-        this.lifts[1].getFirstComponentByName<LiftMove>(LiftMove.name).liftUp();
-        this.lifts[0].getFirstComponentByName<LiftMove>(LiftMove.name).liftUp();
-
-
         phaserReactService.eventEmitter.emit("displayOverlay",true);
-
 
         // INTERACTIONS
 
         let rules:Entity = this.ecsWorld.createEntity();
-        // For all three players
-        for(let i=0;i<this.players.length;i++){
-            let p = this.players[i];
-            // Add SPIKE interaction
-            let spik:PlayerSpikeInteraction = new PlayerSpikeInteraction(
-                p.getFirstComponentByName("gfx"),
-                this.mapEntity.getFirstComponentByName("spikes"),
-                p.getFirstComponentByName(Life.name)
-            );
-            rules.addComponent(spik);
-
-            // Add PLAYER END OF LIFE
-            let eol = new PlayerEndOfLife( p, ()=> {this.killplayer(i)} );
-            rules.addComponent(eol);
-        }
-
         this.cameras.main.setBackgroundColor("#89fbf9")
-
-
 
         console.log("GameScene Created");
         phaserReactService.notifySceneReadyEvent(GAME_SCENE_KEY);
