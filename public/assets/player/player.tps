@@ -32,7 +32,7 @@
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>spritesheet-only</string>
+        <string>json</string>
         <key>textureFileName</key>
         <filename></filename>
         <key>flipPVR</key>
@@ -128,7 +128,13 @@
             </struct>
         </struct>
         <key>dataFileNames</key>
-        <map type="GFileNameMap"/>
+        <map type="GFileNameMap">
+            <key>data</key>
+            <struct type="DataFile">
+                <key>name</key>
+                <filename>player.json</filename>
+            </struct>
+        </map>
         <key>multiPack</key>
         <false/>
         <key>forceIdenticalLayout</key>
@@ -175,10 +181,15 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">player/player_0.png</key>
-            <key type="filename">player/player_1.png</key>
-            <key type="filename">player/player_2.png</key>
-            <key type="filename">player/player_3.png</key>
+            <key type="filename">player_back/player_back_0.png</key>
+            <key type="filename">player_back/player_back_1.png</key>
+            <key type="filename">player_back/player_back_2.png</key>
+            <key type="filename">player_front/player_front_0.png</key>
+            <key type="filename">player_front/player_front_1.png</key>
+            <key type="filename">player_front/player_front_2.png</key>
+            <key type="filename">player_side/player_side0.png</key>
+            <key type="filename">player_side/player_side1.png</key>
+            <key type="filename">player_side/player_side2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -196,7 +207,9 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>player</filename>
+            <filename>player_side</filename>
+            <filename>player_back</filename>
+            <filename>player_front</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
