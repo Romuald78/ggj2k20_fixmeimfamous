@@ -1,4 +1,5 @@
 import {GameObjects,Scene,Cameras} from "phaser";
+import * as GameConstants from "../ggj2020/GameConstants";
 
 export class GameCamera extends GameObjects.GameObject {
     constructor(scene:Scene) {
@@ -13,17 +14,6 @@ export class GameCamera extends GameObjects.GameObject {
         this.scene.cameras.main.setBounds(x,y,width,height);
     }
 
-    startFollow(object:any):Promise<void>{
-        return new Promise<void>((resolve, reject) => {
-            this.scene.cameras.main.stopFollow();
-            this.scene.cameras.main.pan(object.x,object.y,300,"Power2", true,(camera: Phaser.Cameras.Scene2D.Camera, progress: number, x: number, y: number) => {
-                if(progress>=0.85){
-                    this.scene.cameras.main.startFollow(object,false,0.1,0.1);
-                    resolve();
-                }
-            })
-        })
-    }
 
     update(delta): void {
 
@@ -32,4 +22,17 @@ export class GameCamera extends GameObjects.GameObject {
     destroy(){
 
     }
+
+    zoom(minX:number, minY:number, maxX:number, maxY:number){
+//*
+        let screen = this.scene.cameras.main.scaleManager.displaySize;
+        let ratioX = 1.5*(maxX-minX)/screen.width;
+        let ratioY = 1.5*(maxY-minY)/screen.height;
+        let ratio  = Math.max( ratioX, ratioY );
+        this.scene.cameras.main.setZoom(1/ratio);
+        this.scene.cameras.main.centerOn( (minX+maxX)/2, (minY+maxY)/2);
+//*/
+    }
+
+
 }

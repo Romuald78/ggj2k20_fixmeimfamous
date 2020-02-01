@@ -16,4 +16,11 @@ export class PhysicGenericComponent implements Component{
         return this.name;
     }
 
+    getX(){
+        return this.body.position.x;
+    }
+    getY(){
+        return this.body.position.y;
+    }
+
 }

@@ -11,6 +11,8 @@ import { Life } from "../objects/components/Life";
 import { PlayerFactory } from "../ggj2020/PlayerFactory";
 import {RecipeFactory} from "../ggj2020/RecipeFactory";
 import * as GameConstants from "../ggj2020/GameConstants";
+import {PhysicGenericComponent} from "../ecs/system/physics/PhysicGenericComponent";
+import {CameraFactory} from "../ggj2020/CameraFactory";
 export const GAME_SCENE_KEY: string = "GameScene";
 
 
@@ -92,8 +94,7 @@ export class GameScene extends Scene {
         // Create background
         let bg = this.add.sprite(0,0, "background");
         bg.setOrigin(0,0);
-        let ratio = bg.width
-        bg.setScale(4,4);
+        bg.setScale(GameConstants.MAP_W/bg.width,GameConstants.MAP_H/bg.height);
 
         // RECIPES
         let recipeFactory = new RecipeFactory(this.ecsWorld, this);
@@ -101,33 +102,32 @@ export class GameScene extends Scene {
         recipeFactory.create(2);
 
 
-        //this.cameras.main.setZoom(0.5);
 
         let playerFactory = new PlayerFactory(this.ecsWorld, this);
 
+        let playerList:PhysicGenericComponent[] = [];
         // create players at appropriate locations with approprirate controllers !
         for (let i = 0; i < 4; i++) {
-            playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2);
+            let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2);
+            let phy:PhysicGenericComponent = ent.getFirstComponentByName( "PhysicGenericComponent" );
+            playerList.push( phy );
         }
 
 
         let moduleFactory = new ModuleFactory(this.ecsWorld, this);
-        for (let i = 1; i <= 4; i++) {
+        for (let i = 1; i <= 5; i++) {
             moduleFactory.create(i, 500+(i%2)*GameConstants.moduleWidthWU, 500+Math.round(i/2)*GameConstants.moduleHeightWU);
         }
 
+        let camFactory = new CameraFactory(this.ecsWorld,this);
+        camFactory.create(playerList);
 
 
 
-        this.gameCam = new GameCamera(this);
-
-        // Lifts
-        this.gameCam.setBounds(0, 0, 1000, 1000);
-
-        //phaserReactService.eventEmitter.emit("displayOverlay", true);
 
         //this.cameras.main.setBackgroundColor("#89fbf9")
         this.cameras.main.setBackgroundColor("#000000")
+
 
         console.log("GameScene Created");
         phaserReactService.notifySceneReadyEvent(GAME_SCENE_KEY);
@@ -138,8 +138,6 @@ export class GameScene extends Scene {
 
         this.ecsWorld.update(delta);
 
-        // Camera Update
-        this.gameCam.update(delta);
 
 
     }

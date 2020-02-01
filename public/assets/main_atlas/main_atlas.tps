@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>main_atlas.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -177,7 +177,7 @@
             <key>defaultPivotPoint</key>
             <point_f>0.5,0.5</point_f>
             <key>writePivotPoints</key>
-            <false/>
+            <true/>
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
@@ -185,6 +185,21 @@
             <key type="filename">modules/module_2/module_2_0.png</key>
             <key type="filename">modules/module_3/module_3_0.png</key>
             <key type="filename">modules/module_4/module_4_0.png</key>
+            <key type="filename">modules/module_5/module_5_0.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>37,37,75,75</rect>
+                <key>scale9Paddings</key>
+                <rect>37,37,75,75</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">player_back/player_back_0.png</key>
             <key type="filename">player_back/player_back_1.png</key>
             <key type="filename">player_back/player_back_2.png</key>
