@@ -81,7 +81,7 @@ export class PlayerFactory {
         let originX = player.x;
         let originY = player.y;
         let circle = Matter.Bodies.circle(originX, originY,
-            GameConstants.playerWidthWU / 5,
+            GameConstants.playerWidthWU / 6,
             // player.height * player.scaleY,
             { mass: 80 },
         );

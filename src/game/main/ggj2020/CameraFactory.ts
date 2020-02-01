@@ -23,6 +23,7 @@ export class CameraFactory {
 
         // Set bounds
         gameCam.setBounds(-GameConstants.MAP_W/2, -GameConstants.MAP_H/2, 2*GameConstants.MAP_W, 2*GameConstants.MAP_H);
+//        gameCam.setBounds(0, 0, GameConstants.MAP_W, GameConstants.MAP_H);
 
         // Create script component for cam zoom
         let camZoom = new CameraZoom(playerList,gameCam);

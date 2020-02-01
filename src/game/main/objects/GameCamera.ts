@@ -24,14 +24,12 @@ export class GameCamera extends GameObjects.GameObject {
     }
 
     zoom(minX:number, minY:number, maxX:number, maxY:number){
-//*
         let screen = this.scene.cameras.main.scaleManager.displaySize;
-        let ratioX = 1.5*(maxX-minX)/screen.width;
-        let ratioY = 1.5*(maxY-minY)/screen.height;
+        let ratioX = (maxX-minX+GameConstants.ZOOM_MARGIN)/screen.width;
+        let ratioY = (maxY-minY+GameConstants.ZOOM_MARGIN)/screen.height;
         let ratio  = Math.max( ratioX, ratioY );
         this.scene.cameras.main.zoomTo(1/ratio);
         this.scene.cameras.main.centerOn( (minX+maxX)/2, (minY+maxY)/2);
-//*/
     }
 
 

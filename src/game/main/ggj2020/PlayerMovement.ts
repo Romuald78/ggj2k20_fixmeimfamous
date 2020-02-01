@@ -57,6 +57,9 @@ export class PlayerMovement implements ScriptComponent {
             }
         }
 
+        // Set Z depth according to Y level
+        this.player.setDepth(Math.round(this.player.y*1000))
+
         Matter.Body.applyForce(this.playerBody, this.playerBody.position, Matter.Vector.create(dx*GameConstants.PLAYER_MOVE_FORCE, dy*GameConstants.PLAYER_MOVE_FORCE));
     }
 }
