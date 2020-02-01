@@ -1,9 +1,10 @@
 import {Scene} from "phaser";
 import * as Matter from "matter-js";
+import * as GameConstants from "../../../ggj2020/GameConstants";
 
 export class PhysicWorldDebugger {
     debugData:Phaser.GameObjects.Graphics[] = [];
-    enabled = true;
+    enabled = GameConstants.DEBUG_PHYSICS;
     private removeListener: () => void;
 
     constructor(private scene: Scene, engine: Matter.Engine) {

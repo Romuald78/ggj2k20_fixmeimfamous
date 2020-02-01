@@ -10,7 +10,7 @@ import { PlayerMovement } from "../ggj2020/PlayerMovement";
 import { Life } from "../objects/components/Life";
 import { PlayerFactory } from "../ggj2020/PlayerFactory";
 import {RecipeFactory} from "../ggj2020/RecipeFactory";
-
+import * as GameConstants from "../ggj2020/GameConstants";
 export const GAME_SCENE_KEY: string = "GameScene";
 
 
@@ -108,7 +108,7 @@ export class GameScene extends Scene {
 
         let moduleFactory = new ModuleFactory(this.ecsWorld, this);
         for (let i = 1; i <= 4; i++) {
-            moduleFactory.create(i, i * 100 + 100, i * 20 + 150);
+            moduleFactory.create(i, 500+(i%2)*GameConstants.moduleWidthWU, 500+Math.round(i/2)*GameConstants.moduleHeightWU);
         }
 
 

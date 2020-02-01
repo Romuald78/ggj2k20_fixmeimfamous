@@ -81,7 +81,7 @@ export class PlayerFactory {
         let originX = player.x;
         let originY = player.y;
         let circle = Matter.Bodies.circle(originX, originY,
-            GameConstants.playerWidthWU / 4,
+            GameConstants.playerWidthWU / 5,
             // player.height * player.scaleY,
             { mass: 80 },
         );
@@ -115,7 +115,7 @@ export class PlayerFactory {
         let playerMov = entity.addComponent(new PlayerMovement(physicBodyComponent.getBody(), player, playerInput));
         entity.addComponent(playerMov);
 
-        let gfxfollow = entity.addComponent(new GfxFollowPhysics(gfxComp, physicBodyComponent));
+        let gfxfollow = entity.addComponent(new GfxFollowPhysics(gfxComp, physicBodyComponent,0, GameConstants.playerHeightOF7));
         entity.addComponent(gfxfollow);
 
         return entity;

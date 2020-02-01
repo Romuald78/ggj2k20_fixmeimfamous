@@ -27,7 +27,7 @@ export class ModuleFactory {
 
         // create animation object
         this.scene.anims.create({
-            key: 'MODULE_IDLE',
+            key: 'MODULE_IDLE'+idmodule,
             frames: this.scene.anims.generateFrameNames(atlasName, {
                 prefix: "module_" + idmodule + "/module_" + idmodule + "_",
                 suffix: ".png",
@@ -40,7 +40,7 @@ export class ModuleFactory {
         });
 
         // Play animation IDLE
-        module.anims.play('MODULE_IDLE', true);
+        module.anims.play('MODULE_IDLE'+idmodule, true);
 
         ////
         //Body creation
@@ -48,7 +48,7 @@ export class ModuleFactory {
         let originX = module.x;
         let originY = module.y;
         let rectangleCollisionBox = Matter.Bodies.rectangle(originX, originY,
-            GameConstants.moduleWidthWU/2, GameConstants.moduleHeightWU/2,
+            GameConstants.moduleWidthWU, GameConstants.moduleHeightWU,
             // player.height * player.scaleY,
             //{ mass: 8000 },
         );
