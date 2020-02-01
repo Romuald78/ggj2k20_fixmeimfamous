@@ -6,3 +6,11 @@
 /electron/out/**
 /electron/node_modules/**
 /docker/www/**
+/public/assets/player/player_side.zip
+/public/assets/player/player_front.zip
+/public/assets/player/player_back.zip
+/public/assets/player/modules.zip
+/public/assets/main_atlas/player_front.zip
+/public/assets/main_atlas/player_side.zip
+/public/assets/main_atlas/player_back.zip
+/public/assets/main_atlas/modules.zip
