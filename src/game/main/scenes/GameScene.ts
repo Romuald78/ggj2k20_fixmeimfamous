@@ -177,7 +177,7 @@ export class GameScene extends Scene {
             let player = data.playersStartData[key];
             let teamId = 0;
             if(player.team!=="blue"){
-                let teamId = 1;
+                teamId = 1;
             }
             let ctrlID = -1;
             console.log("new player : "+player.name);
@@ -188,7 +188,14 @@ export class GameScene extends Scene {
             }
             let radius = 200;
             let angle = Math.random()*Math.PI/2;
-			let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, ctrlID, teamId, moduleList);
+            let xInit = 0;
+            let yInit = 0;
+            if(teamId == 1){
+                angle += Math.PI;
+                xInit = GameConstants.MAP_W;
+                yInit = GameConstants.MAP_H;
+            }
+			let ent:Entity = playerFactory.create(Math.cos(angle)*radius+xInit, Math.sin(angle)*radius+yInit, ctrlID, teamId, moduleList);
             let phy:PhysicGenericComponent = ent.getFirstComponentByName( "PhysicGenericComponent" );
             playerList.push( ent );
         }
