@@ -104,7 +104,7 @@ export class CheckModulesAgainstRecipes implements Component {
         // step 1: check in all recipes the starting point
         // for that we have the relativeModules list
 
-        this.relativeModulesList.forEach(element => {
+        this.relativeModulesList.forEach((element,teamId) => {
             // get the first element in the relative modules list
             const firstRelativeModule: RelativeModule = element[0];
             // fetch list of modules for modules having the required id
@@ -121,7 +121,7 @@ export class CheckModulesAgainstRecipes implements Component {
                             // We have a winner here !
                             // raise appopriate event
                             this.callback({
-                                team:i,
+                                team:teamId,
                                 receipe:this.recipesList[i]
                             });
                             break; // WIN !

@@ -98,6 +98,7 @@ class WinLoseDialog extends React.Component<{}, State> {
                                        team={this.state.windata.team !== 0 ? "blue" : "red"}
                                        modulegrid={((this.state.windata.receipe) as Entity).getFirstComponentByName<ModuleGrid>(ModuleGrid.name)}/>
                         }
+
                         <DialogContentText id="alert-dialog-description"  style={{backgroundColor:this.state.windata.team!==0?"#00009FFF":"#9F0000FF",
                             textAlign:"center",color:"white",fontSize:"2.5em"}}>
                             {(this.state.windata.team!==0?"Blue":"Red")+" Win!"}
