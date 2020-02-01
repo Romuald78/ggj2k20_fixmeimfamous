@@ -15,7 +15,7 @@ export class PlayerMovement implements ScriptComponent {
     private defaultScaleY;
 
 
-    constructor(private playerBody: Matter.Body, private player: Phaser.GameObjects.Sprite, private playerInput: InputComponent) {
+    constructor(private playerBody: Matter.Body, private player: Phaser.GameObjects.Sprite, private playerInput: InputComponent,private teamid:number) {
         this.defaultScaleX = player.scaleX;
         this.defaultScaleY = player.scaleY;
     }
@@ -37,20 +37,20 @@ export class PlayerMovement implements ScriptComponent {
             ang = (ang+360)%360;
             if(ang >= 45 && ang < 135){
                 // DOWN
-                this.player.play("WALKDOWN");
+                this.player.play("WALKDOWN"+this.teamid);
             }
             else if(ang >= 135 && ang < 225){
                 // LEFT
-                this.player.play("WALKSIDE");
+                this.player.play("WALKSIDE"+this.teamid);
                 this.player.setScale(this.defaultScaleX,this.defaultScaleY);
             }
             else if(ang >= 225 && ang < 315){
                 // UP
-                this.player.play("WALKUP");
+                this.player.play("WALKUP"+this.teamid);
             }
             else{
                 // RIGHT
-                this.player.play("WALKSIDE");
+                this.player.play("WALKSIDE"+this.teamid);
                 this.player.setScale(-this.defaultScaleX,this.defaultScaleY);
             }
             // check if we have to update the angle or not

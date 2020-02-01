@@ -88,20 +88,20 @@ class WinLoseDialog extends React.Component<{}, State> {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogContent style={{backgroundColor:this.state.windata.team!==0?"#00009FFF":"#9F0000FF"}}>
-                        <PlayerComponent classes={{}} key={""} name={this.state.windata.team!==0?"Blue":"Red"} src={this.state.windata.team!==0?
+                    <DialogContent style={{backgroundColor:this.state.windata.team===0?"#00009FFF":"#9F0000FF"}}>
+                        <PlayerComponent classes={{}} key={""} name={this.state.windata.team===0?"Blue":"Red"} src={this.state.windata.team===0?
                             "./assets/main_atlas/player_front/player_front_blue_0.png":
                             "./assets/main_atlas/player_front/player_front_0.png"
-                        } team={this.state.windata.team!==0?"blue":"red"}></PlayerComponent>
+                        } team={this.state.windata.team===0?"blue":"red"}></PlayerComponent>
                         {this.state.windata.receipe &&
                         <TargetPreview color={this.state.windata.team !== 0 ? "#00009FFF" : "#9F0000FF"}
                                        team={this.state.windata.team !== 0 ? "blue" : "red"}
                                        modulegrid={((this.state.windata.receipe) as Entity).getFirstComponentByName<ModuleGrid>(ModuleGrid.name)}/>
                         }
 
-                        <DialogContentText id="alert-dialog-description"  style={{backgroundColor:this.state.windata.team!==0?"#00009FFF":"#9F0000FF",
+                        <DialogContentText id="alert-dialog-description"  style={{backgroundColor:this.state.windata.team===0?"#00009FFF":"#9F0000FF",
                             textAlign:"center",color:"white",fontSize:"2.5em"}}>
-                            {(this.state.windata.team!==0?"Blue":"Red")+" Win!"}
+                            {(this.state.windata.team===0?"Blue":"Red")+" Win!"}
                         </DialogContentText>
                         <Button variant={"contained"} onClick={() => {
                             this.goBack()

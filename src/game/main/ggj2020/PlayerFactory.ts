@@ -36,7 +36,7 @@ export class PlayerFactory {
 
         // create animation object
         this.scene.anims.create({
-            key: 'WALKUP',
+            key: 'WALKUP'+teamId,
             frames: this.scene.anims.generateFrameNames(atlasName, {
                 prefix: 'player_back_' + (teamId!==0 ? 'blue_' : ''),
                 suffix:'.png',
@@ -48,7 +48,7 @@ export class PlayerFactory {
             repeat: -1
         });
         this.scene.anims.create({
-            key: 'WALKDOWN',
+            key: 'WALKDOWN'+teamId,
             frames: this.scene.anims.generateFrameNames(atlasName, {
                 prefix: 'player_front_' + (teamId!==0 ? 'blue_' : ''),
                 suffix:'.png',
@@ -60,7 +60,7 @@ export class PlayerFactory {
             repeat: -1
         });
         this.scene.anims.create({
-            key: 'WALKSIDE',
+            key: 'WALKSIDE'+teamId,
             frames: this.scene.anims.generateFrameNames(atlasName, {
                 prefix: 'player_side' + (teamId!==0 ? '_blue_' : ''),
                 suffix:'.png',
@@ -74,7 +74,7 @@ export class PlayerFactory {
 
 
         // Play animation IDLE
-        player.anims.play('WALKUP', true);
+        player.anims.play('WALKUP'+teamId, true);
 
 
         ////
@@ -119,7 +119,7 @@ export class PlayerFactory {
         entity.addComponent(playerInput);
 
 
-        let playerMov = entity.addComponent(new PlayerMovement(physicBodyComponent.getBody(), player, playerInput));
+        let playerMov = entity.addComponent(new PlayerMovement(physicBodyComponent.getBody(), player, playerInput,teamId));
         entity.addComponent(playerMov);
 
 

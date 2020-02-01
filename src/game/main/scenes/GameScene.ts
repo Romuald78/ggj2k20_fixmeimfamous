@@ -190,7 +190,7 @@ export class GameScene extends Scene {
             let angle = Math.random() * Math.PI / 2;
             let xInit = 0;
             let yInit = 0;
-            if (teamId == 1) {
+            if (teamId === 0) {
                 angle += Math.PI;
                 xInit = GameConstants.MAP_W;
                 yInit = GameConstants.MAP_H;
