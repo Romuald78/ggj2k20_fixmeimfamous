@@ -6,6 +6,7 @@ import {ModuleGrid} from "./ModuleGrid";
 
 export class RecipeFactory {
 
+    recipes:Entity[] = [];
 
     constructor(private world: ECSWorld, private scene: Scene) {
 
@@ -19,7 +20,7 @@ export class RecipeFactory {
         let mg = new ModuleGrid(teamId);
         entity.addComponent(mg);
 
-
+        this.recipes.push(entity);
         return entity;
     }
 }

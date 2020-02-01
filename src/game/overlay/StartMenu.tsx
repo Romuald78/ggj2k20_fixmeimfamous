@@ -135,7 +135,7 @@ export class StartMenu extends React.Component<{}, State> {
                 };
                 newState.players[name] = player;
                 return newState;
-            })
+            });
             return true;
         }else{
             return false;

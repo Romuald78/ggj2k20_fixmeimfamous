@@ -32,6 +32,7 @@ export class GameScene extends Scene {
     private players: Entity[] = [];
 
     private ecsWorld: ECSWorld;
+    public recipeFactory: RecipeFactory;
 
 
     constructor() {
@@ -147,17 +148,10 @@ export class GameScene extends Scene {
         });
         Matter.World.add(physicWorld.world, borderBox);
 
-
-
-
         // RECIPES
-        let recipeFactory = new RecipeFactory(this.ecsWorld, this);
-        recipeFactory.create(1);
-        recipeFactory.create(2);
-
-
-
-
+        this.recipeFactory = new RecipeFactory(this.ecsWorld, this);
+        this.recipeFactory.create(1);
+        this.recipeFactory.create(2);
 
         let moduleFactory = new ModuleFactory(this.ecsWorld, this);
         let dw = GameConstants.MAP_W - 2*GameConstants.moduleWidthWU;

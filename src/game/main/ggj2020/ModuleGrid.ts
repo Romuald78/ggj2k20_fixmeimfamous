@@ -9,7 +9,7 @@ import {Component} from "../ecs/core/Component";
 export class ModuleGrid implements Component{
 
 
-    private grid:number[][]=[];
+    public grid:number[][]=[];
 
     getName(): string {
         return ModuleGrid.name;
