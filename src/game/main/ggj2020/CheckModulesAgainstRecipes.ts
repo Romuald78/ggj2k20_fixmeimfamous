@@ -1,9 +1,9 @@
 import { PhysicGenericComponent } from './../ecs/system/physics/PhysicGenericComponent';
-import { ScriptComponent } from "../ecs/system/script/ScriptComponent";
 import * as GameConstants from "./GameConstants";
 import { ModuleInfo } from "./ModuleInfo";
 import { Entity } from "../ecs/core/Entity";
 import { ModuleGrid } from "./ModuleGrid";
+import {Component} from "../ecs/core/Component";
 
 class RelativeModule {
     public constructor(private id: number, private relativeOffsetx: number, private relativeOffsety: number) {
@@ -23,7 +23,7 @@ class RelativeModule {
     }
 };
 
-export class CheckModulesAgainstRecipes implements ScriptComponent {
+export class CheckModulesAgainstRecipes implements Component {
 
     private relativeModulesList: RelativeModule[][] = [];
 
@@ -97,7 +97,7 @@ export class CheckModulesAgainstRecipes implements ScriptComponent {
         return returnValue;
     }
 
-    updateScript(delta: number) {
+    checkWin() {
         // fetch list of modules and for each module check if it matches the provided recipes
         // (be careful to ignore modules that are currently carried)
         // step 1: check in all recipes the starting point

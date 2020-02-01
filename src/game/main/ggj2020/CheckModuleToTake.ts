@@ -2,17 +2,17 @@ import {ScriptComponent} from "../ecs/system/script/ScriptComponent";
 import {Physic2D} from "../ecs/system/physics/Physic2D";
 import {PhysicGenericComponent} from "../ecs/system/physics/PhysicGenericComponent";
 import * as GameConstants from "./GameConstants";
-import * as Matter from "matter-js";
 import {ModuleInfo} from "./ModuleInfo";
-import {physicWorld} from "../ecs/system/physics/PhysicWorld";
 import {InputComponent} from "../ecs/system/controls/InputComponent";
 import {Entity} from "../ecs/core/Entity";
+import {CheckModulesAgainstRecipes} from "./CheckModulesAgainstRecipes";
 
 export class CheckToModuleToTake implements ScriptComponent{
 
+
     private carriedModule:ModuleInfo;
 
-    constructor(private playerEnt:Entity, private moduleList:Entity[]){
+    constructor(private playerEnt:Entity, private moduleList:Entity[],private checkModulesAgainstRecipes:CheckModulesAgainstRecipes){
         this.carriedModule = null;
     }
 
@@ -37,6 +37,10 @@ export class CheckToModuleToTake implements ScriptComponent{
                 //// TODO avoid putting a module on another one
                 this.carriedModule.leave();
                 this.carriedModule = null;
+                console.log("check ");
+                setTimeout(()=>{
+                    this.checkModulesAgainstRecipes.checkWin();
+                },100);
             }
         }
         else {

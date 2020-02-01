@@ -6,8 +6,8 @@ interface State {
 }
 
 interface Props {
-    color:string,
-    team:string,
+    color: string,
+    team: string,
     modulegrid: ModuleGrid,
 }
 
@@ -20,10 +20,11 @@ class ModuleImg extends React.Component<{ id: number }, {}> {
         return (
             <React.Fragment>
                 {this.props.id !== 0 &&
-                    <img style={{width:"32px",height:"32px"}} draggable={false} alt={this.mapIdToImage(this.props.id)} src={this.mapIdToImage(this.props.id)}/>
+                <img style={{width: "32px", height: "32px"}} draggable={false} alt={this.mapIdToImage(this.props.id)}
+                     src={this.mapIdToImage(this.props.id)}/>
                 }
                 {this.props.id === 0 &&
-                    <div style={{width:"32px",height:"32px"}} />
+                <div style={{width: "32px", height: "32px"}}/>
                 }
             </React.Fragment>
         );
@@ -42,14 +43,21 @@ class TargetPreview extends React.Component<Props, State> {
     public render() {
         return (
             <React.Fragment>
-                <Paper style={{backgroundColor:this.props.color,margin:"20px"}}>
-                    <span> Team {this.props.team} target:</span>
-                {this.props.modulegrid.grid.map((column,index) => {
-                    return <div style={{display:"flex",justifyContent:"center"}} key={"index"}>{column.map((item,index2) => {
-                        return <ModuleImg key ={index+"_"+index2+"_"+this.props.color} id={item}/>
-                    })}</div>
-                })}
-            </Paper>
+                <div style={{
+                    position: "absolute",display: "flex",
+                    bottom: this.props.team === "blue" ? undefined : "0",
+                    right: this.props.team === "blue" ? undefined : "0"
+                }}>
+                    <Paper style={{backgroundColor: this.props.color, margin: "20px"}}>
+                        <span> Team {this.props.team} target:</span>
+                        {this.props.modulegrid.grid.map((column, index) => {
+                            return <div style={{display: "flex", justifyContent: "center"}}
+                                        key={"index"}>{column.map((item, index2) => {
+                                return <ModuleImg key={index + "_" + index2 + "_" + this.props.color} id={item}/>
+                            })}</div>
+                        })}
+                    </Paper>
+                </div>
             </React.Fragment>
         );
     }

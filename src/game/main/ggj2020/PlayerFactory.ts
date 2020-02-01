@@ -10,10 +10,11 @@ import { GfxFollowPhysics } from "../ecs/system/script/GfxFollowPhysics";
 import { InputComponent } from "../ecs/system/controls/InputComponent";
 import * as GameConstants from "./GameConstants";
 import {CheckToModuleToTake} from "./CheckModuleToTake";
+import {CheckModulesAgainstRecipes} from "./CheckModulesAgainstRecipes";
 
 export class PlayerFactory {
 
-    constructor(private world: ECSWorld, private scene: Scene) {
+    constructor(private world: ECSWorld, private scene: Scene,private checkModulesAgainstRecipes:CheckModulesAgainstRecipes) {
 
     }
 
@@ -126,7 +127,7 @@ export class PlayerFactory {
         let gfxfollow = entity.addComponent(new GfxFollowPhysics(gfxComp, physicBodyComponent,0, GameConstants.playerHeightOF7));
         entity.addComponent(gfxfollow);
 
-        let takeLeave = entity.addComponent(new CheckToModuleToTake(entity, modEntities));
+        let takeLeave = entity.addComponent(new CheckToModuleToTake(entity, modEntities,this.checkModulesAgainstRecipes));
         entity.addComponent(takeLeave);
 
         return entity;

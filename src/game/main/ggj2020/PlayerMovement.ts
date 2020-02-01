@@ -34,7 +34,6 @@ export class PlayerMovement implements ScriptComponent {
             || this.playerInput.isON("WALK_UP")
             || this.playerInput.isON("WALK_DOWN") ){
             let ang = realAng*180/Math.PI;
-            console.log(dx + " / " + dy + " / " +realAng);
             ang = (ang+360)%360;
             if(ang >= 45 && ang < 135){
                 // DOWN

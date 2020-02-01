@@ -18,12 +18,13 @@ import * as Matter from "matter-js";
 import { physicWorld } from "../ecs/system/physics/PhysicWorld";
 import { MapFactory } from "../ggj2020/MapFactory";
 import { ModuleInfo } from "../ggj2020/ModuleInfo";
+import {CheckModulesAgainstRecipes} from "../ggj2020/CheckModulesAgainstRecipes";
 export const GAME_SCENE_KEY: string = "GameScene";
 
 let Stats = require("stats.js");
 let stats = new Stats();
 stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild(stats.dom);
+//document.body.appendChild(stats.dom);
 
 export class GameScene extends Scene {
     eventEmitter: EventEmitter = new EventEmitter();
@@ -163,8 +164,10 @@ export class GameScene extends Scene {
             let modInfo: ModuleInfo = modEnt.getFirstComponentByName<ModuleInfo>("ModuleInfo");
             moduleList.push(modEnt);
         }
+        let ruleFactory = new RuleFactory(this.ecsWorld, this);
+        let rules = ruleFactory.create(moduleList, this.recipeFactory.recipes);
 
-        let playerFactory = new PlayerFactory(this.ecsWorld, this);
+        let playerFactory = new PlayerFactory(this.ecsWorld, this,rules.getFirstComponentByName<CheckModulesAgainstRecipes>(CheckModulesAgainstRecipes.name));
         let playerList: Entity[] = [];
         // create players at appropriate locations with approprirate controllers !
         for (let i = 0; i < Object.keys(data.playersStartData).length; i++) {
@@ -200,8 +203,6 @@ export class GameScene extends Scene {
         let camFactory = new CameraFactory(this.ecsWorld, this);
         camFactory.create(playerList);
 
-        let ruleFactory = new RuleFactory(this.ecsWorld, this);
-        ruleFactory.create(moduleList, this.recipeFactory.recipes);
 
         //this.cameras.main.setBackgroundColor("#89fbf9")
         this.cameras.main.setBackgroundColor("#000000")

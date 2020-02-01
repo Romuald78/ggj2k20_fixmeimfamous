@@ -32,13 +32,12 @@ class TargetsPreview extends React.Component<{}, State> {
     public render() {
         return (
             <React.Fragment>
-                <div style={{display:"flex",position:"absolute",bottom:"0",right:"0"}}>
                 {this.state.modules && this.state.modules.map((module,index) => {
-                    return <TargetPreview key={""+index} modulegrid={module}
+                    return <TargetPreview
+                        key={""+index} modulegrid={module}
                                           team={index===0?"blue":"red"}
                                           color={index===0?"#0000FF60":"#FF000060"}/>
                 })}
-                </div>
             </React.Fragment>
         );
     }
