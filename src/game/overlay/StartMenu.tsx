@@ -3,7 +3,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import {phaserReactService} from "../phaser/PhaserReactService";
 import {MENU_SCENE_KEY, MenuScene} from "../main/scenes/MenuScene";
-import {Button, ButtonBase, Chip, GridList, GridListTile, Paper} from "@material-ui/core";
+import {Button, Chip, Paper} from "@material-ui/core";
 
 interface Player {
     team: string,
@@ -175,33 +175,30 @@ export class StartMenu extends React.Component<{}, State> {
                     <h1>Select Your team</h1>
                     <Paper style={{backgroundColor: "#0000F28F", width: "100%", height: "30%",margin:"20px"}}>
                     <span style={{paddingTop:"5px",paddingLeft:"5px"}}>Team Blue</span>
-                    <List style={{
+                    <div style={{
                         display: "flex",
                         justifyContent: "center",
                         flexDirection: "row",}}>
                         {Object.keys(this.state.players).map(key => {
                                 let player = this.state.players[key];
-                            return player.team!=="blue"?<div key={key} style={{width: "0", height: "0"}}></div>:<ListItem key={key}>
+                            return player.team!=="blue"?<div key={key} style={{width: "0", height: "0"}}></div>:
                                     <PlayerComponent classes={{}} key={key} {...player} />
-                                </ListItem>
                             }
                         )}
-                    </List>
+                    </div>
                     </Paper>
                     <Paper style={{backgroundColor: "#F200008F", width: "100%", height: "30%",margin:"20px"}}>
                         <span style={{paddingTop:"5px",paddingLeft:"5px"}}>Team Red</span>
-                        <List style={{
+                        <div style={{
                             display: "flex",
                             justifyContent: "center",
                             flexDirection: "row",}}>
                             {Object.keys(this.state.players).map(key => {
                                     let player = this.state.players[key];
-                                    return player.team!=="red"?<div key={key} style={{width: "0", height: "0"}}></div>:<ListItem key={key}>
-                                        <PlayerComponent classes={{}} key={key} {...player} />
-                                    </ListItem>
+                                    return player.team!=="red"?<div key={key} style={{width: "0", height: "0"}}></div>:<PlayerComponent classes={{}} key={key} {...player} />
                                 }
                             )}
-                        </List>
+                        </div>
                     </Paper>
 
                     <Button disabled={this.diallowValidate()} style={{margin:"20px"}} variant="contained" color="primary" onClick={()=>{this.validate()}}>
