@@ -160,8 +160,20 @@ export class GameScene extends Scene {
 
         let playerList:PhysicGenericComponent[] = [];
         // create players at appropriate locations with approprirate controllers !
-        for (let i = 0; i < 4; i++) {
-            let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2);
+        for (let i = 0; i < Object.keys(data.playersStartData).length; i++) {
+            let key = Object.keys(data.playersStartData)[i];
+            let player = data.playersStartData[key];
+            let teamId = 0;
+            if(player.team!=="blue"){
+                let teamId = 1;
+            }
+            let ctrlID = -1;
+            if(player.name ==="Keyboard"){
+                ctrlID = -1;
+            }else{
+                ctrlID = player.name.split("-")[1];
+            }
+            let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, ctrlID, teamId);
             let phy:PhysicGenericComponent = ent.getFirstComponentByName( "PhysicGenericComponent" );
             playerList.push( phy );
         }
