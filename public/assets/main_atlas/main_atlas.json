@@ -1,6 +1,6 @@
 {"frames": {
 
-"module_0.png":
+"module_1/module_1_0.png":
 {
 	"frame": {"x":0,"y":0,"w":64,"h":64},
 	"rotated": false,
@@ -8,7 +8,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
 },
-"module_1.png":
+"module_2/module_2_0.png":
 {
 	"frame": {"x":64,"y":0,"w":64,"h":64},
 	"rotated": false,
@@ -16,7 +16,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
 },
-"module_2.png":
+"module_3/module_3_0.png":
 {
 	"frame": {"x":128,"y":0,"w":64,"h":64},
 	"rotated": false,
@@ -24,7 +24,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
 },
-"module_3.png":
+"module_4/module_4_0.png":
 {
 	"frame": {"x":192,"y":0,"w":64,"h":64},
 	"rotated": false,
@@ -107,10 +107,10 @@
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "player.png",
+	"image": "main_atlas.png",
 	"format": "RGBA8888",
 	"size": {"w":832,"h":64},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:7079918e3657d9b68ba7f9f4c03be9a5:4d8d9cf085fe5f6477bebb8ae06d0708:86d5339b780aedd87b35e2b7c0a7e11b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:98f7d7013b134e31ec187dbf4c8126e3:2b8e1851ffaf7904654c800764e81f1e:c280de110dc006277218185b56ba3751$"
 }
 }

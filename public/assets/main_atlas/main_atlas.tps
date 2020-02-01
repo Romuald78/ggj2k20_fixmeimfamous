@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>player.json</filename>
+                <filename>main_atlas.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,10 +181,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">modules/module_0.png</key>
-            <key type="filename">modules/module_1.png</key>
-            <key type="filename">modules/module_2.png</key>
-            <key type="filename">modules/module_3.png</key>
+            <key type="filename">modules/module_1/module_1_0.png</key>
+            <key type="filename">modules/module_2/module_2_0.png</key>
+            <key type="filename">modules/module_3/module_3_0.png</key>
+            <key type="filename">modules/module_4/module_4_0.png</key>
             <key type="filename">player_back/player_back_0.png</key>
             <key type="filename">player_back/player_back_1.png</key>
             <key type="filename">player_back/player_back_2.png</key>
