@@ -13,3 +13,5 @@ export const moduleHeightWU = 50;//cm
 export const PLAYER_MOVE_FORCE:number = 0.05;
 export const PLAYER_MOVE_FRICTION:number = 0.1;
 
+export const MAP_W:number = 2000;
+export const MAP_H:number = 2000;

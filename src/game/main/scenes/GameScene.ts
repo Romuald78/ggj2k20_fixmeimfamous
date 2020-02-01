@@ -89,6 +89,11 @@ export class GameScene extends Scene {
             removeListenerResizeEvent();
         });
 
+        // Create background
+        let bg = this.add.sprite(0,0, "background");
+        bg.setOrigin(0,0);
+        let ratio = bg.width
+        bg.setScale(4,4);
 
         // RECIPES
         let recipeFactory = new RecipeFactory(this.ecsWorld, this);
