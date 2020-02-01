@@ -83,15 +83,10 @@ export class StartMenu extends React.Component<{}, State> {
             }
             scene.inputComponent.register("pressA",{device_num:0,input_ref:" ",threshold:0,type:"key"});
             scene.inputComponent.registerEvent("pressA",(actionName, buttonState) => {
-                this.addPlayer("Keyboard");
-            });
-            scene.inputComponent.register("pressUp",{device_num:0,input_ref:"Z",threshold:0,type:"key"});
-            scene.inputComponent.registerEvent("pressUp",(actionName, buttonState) => {
-                this.switchPlayer("Keyboard");
-            });
-            scene.inputComponent.register("pressDown",{device_num:0,input_ref:"S",threshold:0,type:"key"});
-            scene.inputComponent.registerEvent("pressDown",(actionName, buttonState) => {
-                this.switchPlayer("Keyboard");
+                if(!buttonState)
+                if(!this.addPlayer("Keyboard")){
+                    this.switchPlayer("Keyboard");
+                }
             });
         });
 
@@ -104,12 +99,15 @@ export class StartMenu extends React.Component<{}, State> {
             input.register("pressA-" + id, {device_num: id, input_ref: "A", threshold: 0, type: "button"});
             input.registerEvent("pressA-" + id, (actionName, buttonState) => {
                 if(!buttonState)
-                this.addPlayer("Gamepad-" + id);
+                if(!this.addPlayer("Gamepad-" + id)){
+                    this.switchPlayer("Gamepad-" + id);
+                }
             });
-            input.register("change-" + id, {device_num: id, input_ref: "B", threshold: 0, type: "button"});
-            input.registerEvent("change-" + id, (actionName, buttonState) => {
+
+            input.register("start-" + id, {device_num: id, input_ref: "START", threshold: 0, type: "button"});
+            input.registerEvent("start-" + id, (actionName, buttonState) => {
                 if(!buttonState)
-                this.switchPlayer("Gamepad-" + id);
+                    this.validate();
             });
         }
     }
@@ -127,22 +125,29 @@ export class StartMenu extends React.Component<{}, State> {
     }
 
     addPlayer(name: string) {
-        this.setState((state) => {
-            let newState = {...state};
-            let player: Player = {
-                name: name,
-                team: Object.keys(newState.players).length % 2 === 0 ? "blue" : "red",
-                src: "./assets/main_atlas/player_front/player_front_0.png"
-            };
-            newState.players[name] = player;
-            return newState;
-        })
+        if(!this.state.players[name]) {
+            this.setState((state) => {
+                let newState = {...state};
+                let player: Player = {
+                    name: name,
+                    team: Object.keys(newState.players).length % 2 === 0 ? "blue" : "red",
+                    src: "./assets/main_atlas/player_front/player_front_0.png"
+                };
+                newState.players[name] = player;
+                return newState;
+            })
+            return true;
+        }else{
+            return false;
+        }
     }
 
     validate() {
-        this.setState({open: false});
-        let scene = phaserReactService.getScene<MenuScene>(MENU_SCENE_KEY);
-        scene.goNext({playersStartData:this.state.players});
+        if(this.allowValidate()) {
+            this.setState({open: false});
+            let scene = phaserReactService.getScene<MenuScene>(MENU_SCENE_KEY);
+            scene.goNext({playersStartData: this.state.players});
+        }
     }
 
     public render() {
@@ -199,12 +204,20 @@ export class StartMenu extends React.Component<{}, State> {
                         </List>
                     </Paper>
 
-                    <Button style={{margin:"20px"}} variant="contained" color="primary" onClick={()=>{this.validate()}}>
+                    <Button disabled={this.diallowValidate()} style={{margin:"20px"}} variant="contained" color="primary" onClick={()=>{this.validate()}}>
                         Start!
                     </Button>
                 </div>
                 }
             </React.Fragment>
         );
+    }
+
+    allowValidate():boolean{
+        return Object.keys(this.state.players).length>0;
+    }
+
+    diallowValidate():boolean{
+        return !this.allowValidate();;
     }
 }
