@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography/Typography";
 import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import Chip from "@material-ui/core/Chip/Chip";
-import { Redirect } from 'react-router-dom';
 import Fab from "@material-ui/core/Fab";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import { phaserReactService } from "../phaser/PhaserReactService";
@@ -58,8 +57,15 @@ class DrawerMenu extends React.Component<{}, State> {
                         <ListItemText onClick={() => {
                             this.setState({ open: false });
                             let scene = phaserReactService.getScene<GameScene>(GAME_SCENE_KEY);
-                            scene.displayWinScreen();
-                        }} primary="[debug] win screen" />
+                            scene.displayWinScreen({team:0});
+                        }} primary="[debug] win screenA" />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemText onClick={() => {
+                            this.setState({ open: false });
+                            let scene = phaserReactService.getScene<GameScene>(GAME_SCENE_KEY);
+                            scene.displayWinScreen({team:1});
+                        }} primary="[debug] win screenB" />
                     </ListItem>
                     <ListItem button>
                         <ListItemText onClick={() => {

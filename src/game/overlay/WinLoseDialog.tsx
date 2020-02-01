@@ -7,22 +7,28 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
+import {PlayerComponent} from "./StartMenu";
+import TargetPreview from "./TargetPreview";
+import {Entity} from "../main/ecs/core/Entity";
+import {ModuleGrid} from "../main/ggj2020/ModuleGrid";
 
 interface State {
     loseDialogOpen: boolean,
     winDialogOpen: boolean,
+    windata:any,
 }
 
 class WinLoseDialog extends React.Component<{}, State> {
     state: State = {
         loseDialogOpen: false,
         winDialogOpen: false,
+        windata:{},
     };
 
     componentDidMount() {
         let removeListener = phaserReactService.onSceneReady<GameScene>(GAME_SCENE_KEY,(scene)=>{
-            scene.registerOnWinCallback(()=>{
-                this.setState({winDialogOpen:true});
+            scene.registerOnWinCallback((windata)=>{
+                this.setState({winDialogOpen:true,windata:windata});
             });
             scene.registerOnLoseCallback(()=>{
                 this.setState({loseDialogOpen:true});
@@ -36,7 +42,7 @@ class WinLoseDialog extends React.Component<{}, State> {
 
 
     goBack() {
-        window.history.back();
+        window.location.reload();
     }
 
     public render() {
@@ -82,27 +88,27 @@ class WinLoseDialog extends React.Component<{}, State> {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogTitle id="alert-dialog-title">{"You Win"}</DialogTitle>
-                    <DialogContent>
-                        <img style={{
-                            maxWidth: "100%",
-                            maxHeight: "100%",
-                            minWidth: "100%",
-                        }}
-                             src="./assets/game/ui/win-image.png"
-                             alt=""/>
-                        <DialogContentText id="alert-dialog-description"  style={{textAlign:"center",color:"green",fontSize:"2.5em"}}>
-                            You Win
+                    <DialogContent style={{backgroundColor:this.state.windata.team!==0?"#00009FFF":"#9F0000FF"}}>
+                        <PlayerComponent classes={{}} key={""} name={this.state.windata.team!==0?"Blue":"Red"} src={this.state.windata.team!==0?
+                            "./assets/main_atlas/player_front/player_front_blue_0.png":
+                            "./assets/main_atlas/player_front/player_front_0.png"
+                        } team={this.state.windata.team!==0?"blue":"red"}></PlayerComponent>
+                        {this.state.windata.receipe &&
+                        <TargetPreview color={this.state.windata.team !== 0 ? "#00009FFF" : "#9F0000FF"}
+                                       team={this.state.windata.team !== 0 ? "blue" : "red"}
+                                       modulegrid={((this.state.windata.receipe) as Entity).getFirstComponentByName<ModuleGrid>(ModuleGrid.name)}/>
+                        }
+                        <DialogContentText id="alert-dialog-description"  style={{backgroundColor:this.state.windata.team!==0?"#00009FFF":"#9F0000FF",
+                            textAlign:"center",color:"white",fontSize:"2.5em"}}>
+                            {(this.state.windata.team!==0?"Blue":"Red")+" Win!"}
                         </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
                         <Button variant={"contained"} onClick={() => {
                             this.goBack()
                         }} color="primary"
                                 autoFocus>
-                            Main Menu
+                            Restart
                         </Button>
-                    </DialogActions>
+                    </DialogContent>
                 </Dialog>
             </React.Fragment>
         );

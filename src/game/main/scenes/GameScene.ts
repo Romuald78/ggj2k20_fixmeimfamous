@@ -51,15 +51,15 @@ export class GameScene extends Scene {
         this.scene.start(GAME_SCENE_KEY);
     }
 
-    displayWinScreen() {
-        this.eventEmitter.emit("win", {});
+    displayWinScreen(windata) {
+        this.eventEmitter.emit("win", windata);
     }
 
     displayLoseScreen() {
         this.eventEmitter.emit("lose", {});
     }
 
-    registerOnWinCallback(callback: () => void): () => void {
+    registerOnWinCallback(callback: (windata) => void): () => void {
         this.eventEmitter.on("win", callback);
         return () => {
             this.eventEmitter.off("win", callback);
@@ -164,7 +164,9 @@ export class GameScene extends Scene {
             let modInfo: ModuleInfo = modEnt.getFirstComponentByName<ModuleInfo>("ModuleInfo");
             moduleList.push(modEnt);
         }
-        let ruleFactory = new RuleFactory(this.ecsWorld, this);
+        let ruleFactory = new RuleFactory(this.ecsWorld, this,(windata)=>{
+            this.displayWinScreen(windata);
+        });
         let rules = ruleFactory.create(moduleList, this.recipeFactory.recipes);
 
         let playerFactory = new PlayerFactory(this.ecsWorld, this,rules.getFirstComponentByName<CheckModulesAgainstRecipes>(CheckModulesAgainstRecipes.name));

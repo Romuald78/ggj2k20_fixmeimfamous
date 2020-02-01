@@ -1,6 +1,4 @@
 import * as React from 'react';
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import {phaserReactService} from "../phaser/PhaserReactService";
 import {MENU_SCENE_KEY, MenuScene} from "../main/scenes/MenuScene";
 import {Button, Chip, Paper} from "@material-ui/core";
@@ -16,7 +14,7 @@ interface PlayerProps extends Player {
     key: string,
 }
 
-class PlayerComponent extends React.Component<PlayerProps, {}> {
+export class PlayerComponent extends React.Component<PlayerProps, {}> {
 
     private getBgColor() {
         if (this.props.team === "blue") {
@@ -119,7 +117,13 @@ export class StartMenu extends React.Component<{}, State> {
     switchPlayer(name: string) {
         this.setState((state) => {
             let newState = {...state};
-            newState.players[name].team = newState.players[name].team=="blue"?"red":"blue";
+            if(newState.players[name].team=="blue") {
+                newState.players[name].team ="red";
+                newState.players[name].src = "./assets/main_atlas/player_front/player_front_0.png";
+            }else{
+                newState.players[name].team = "blue";
+                newState.players[name].src = "./assets/main_atlas/player_front/player_front_blue_0.png";
+            }
             return newState;
         })
     }
@@ -131,7 +135,7 @@ export class StartMenu extends React.Component<{}, State> {
                 let player: Player = {
                     name: name,
                     team: Object.keys(newState.players).length % 2 === 0 ? "blue" : "red",
-                    src: "./assets/main_atlas/player_front/player_front_0.png"
+                    src: Object.keys(newState.players).length % 2 === 0 ? "./assets/main_atlas/player_front/player_front_blue_0.png" : "./assets/main_atlas/player_front/player_front_0.png",
                 };
                 newState.players[name] = player;
                 return newState;

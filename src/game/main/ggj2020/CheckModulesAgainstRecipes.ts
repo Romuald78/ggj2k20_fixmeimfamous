@@ -4,6 +4,7 @@ import { ModuleInfo } from "./ModuleInfo";
 import { Entity } from "../ecs/core/Entity";
 import { ModuleGrid } from "./ModuleGrid";
 import {Component} from "../ecs/core/Component";
+import {Scene} from "phaser";
 
 class RelativeModule {
     public constructor(private id: number, private relativeOffsetx: number, private relativeOffsety: number) {
@@ -27,7 +28,7 @@ export class CheckModulesAgainstRecipes implements Component {
 
     private relativeModulesList: RelativeModule[][] = [];
 
-    constructor(private modulesList: Entity[], recipesList: Entity[]) {
+    constructor(private modulesList: Entity[],private recipesList: Entity[],private callback: (windata:any)=>void) {
         recipesList.forEach(element => {
             this.relativeModulesList.push(this.toRelativeModulesList(element));
         });
@@ -119,7 +120,10 @@ export class CheckModulesAgainstRecipes implements Component {
                         if (this.fullPatternMatching(element, currentPhysics)) {
                             // We have a winner here !
                             // raise appopriate event
-                            console.log("WIN !!!!!!!!!!!!!!!!!!!!!!");
+                            this.callback({
+                                team:i,
+                                receipe:this.recipesList[i]
+                            });
                             break; // WIN !
                         }
                     }
