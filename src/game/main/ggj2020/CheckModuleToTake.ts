@@ -39,30 +39,37 @@ export class CheckToModuleToTake implements ScriptComponent{
             let playerPhys = this.playerEnt.getFirstComponentByName<PhysicGenericComponent>(PhysicGenericComponent.name);
 
             // Loop into the list,
-            this.moduleList.forEach((modEnt) => {
-                if(!this.carriedModule) {
-                    // get module info
-                    let modInfo = modEnt.getFirstComponentByName<ModuleInfo>(ModuleInfo.name);
-                    // Get module physics
-                    let modPhys = modEnt.getFirstComponentByName<PhysicGenericComponent>(PhysicGenericComponent.name);
-                    // CHeck if the input component has been pressed
-                    if (playerIn.isON("TAKEMODULE")) {
-                        let xp = playerPhys.getX();
-                        let yp = playerPhys.getY();
-                        let xm = modPhys.getX();
-                        let ym = modPhys.getY();
-                        let dx = xp - xm;
-                        let dy = yp - ym;
-                        let distance = (dx * dx) + (dy * dy);
-                        if (distance <= 96 * 96) {
-                            if( !modInfo.getCarryMode() ){
-                                this.carriedModule = modInfo;
-                                this.carriedModule.take(playerPhys);
+            if (playerIn.isON("TAKEMODULE")) {
+                let distanceMin = 64;
+                let moduleInfoMin = null;
+                this.moduleList.forEach((modEnt) => {
+                    if(!this.carriedModule) {
+                        // get module info
+                        let modInfo = modEnt.getFirstComponentByName<ModuleInfo>(ModuleInfo.name);
+                        if(!modInfo.getCarryMode()) {
+                            // Get module physics
+                            let modPhys = modEnt.getFirstComponentByName<PhysicGenericComponent>(PhysicGenericComponent.name);
+                            // CHeck if the input component has been pressed
+                            let xp = playerPhys.getX();
+                            let yp = playerPhys.getY();
+                            let xm = modPhys.getX();
+                            let ym = modPhys.getY();
+                            let dx = xp - xm;
+                            let dy = yp - ym;
+                            let distance =Math.sqrt( (dx * dx) + (dy * dy));
+                            if (distance < distanceMin){
+                                distanceMin = distance;
+                                moduleInfoMin = modInfo;
                             }
                         }
                     }
+                });
+
+                if (moduleInfoMin) {
+                    this.carriedModule = moduleInfoMin;
+                    this.carriedModule.take(playerPhys);
                 }
-            });
+            }
         }
 
     }
