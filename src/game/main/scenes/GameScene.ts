@@ -15,6 +15,7 @@ import {PhysicGenericComponent} from "../ecs/system/physics/PhysicGenericCompone
 import {CameraFactory} from "../ggj2020/CameraFactory";
 import * as Matter from "matter-js";
 import {physicWorld} from "../ecs/system/physics/PhysicWorld";
+import {MapFactory} from "../ggj2020/MapFactory";
 export const GAME_SCENE_KEY: string = "GameScene";
 
 
@@ -94,6 +95,7 @@ export class GameScene extends Scene {
         });
 
         // Create background
+        let map = new MapFactory(this.ecsWorld,this.scene.scene).create();
         let grass = this.add.tileSprite(GameConstants.MAP_W/2, GameConstants.MAP_H/2, 3.0*GameConstants.MAP_W,3.0*GameConstants.MAP_H, "grass");
         let bg = this.add.sprite(0,0, "background");
         bg.setOrigin(0,0);

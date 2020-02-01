@@ -66,6 +66,8 @@ export class LoaderScene extends Scene {
         this.load.image('logoGGJ', 'assets/misc/logoGGJ.png');
         this.load.image('logoPhaser', 'assets/misc/logoPhaser.jpg');
         this.load.image('logoRPHStudio', 'assets/misc/logoRPHStudio.png');
+        this.load.audio('theme', ["assets/sound/GGJ - Fix Me I'm Famous.mp3"]);
+
 
         // Background image (map)
         this.load.image('background', 'assets/map/map.png');
