@@ -38,7 +38,7 @@ export class PlayerFactory {
         this.scene.anims.create({
             key: 'WALKUP',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'player_back_' + (teamId==0 ? 'blue_' : ''),
+                prefix: 'player_back_' + (teamId!==0 ? 'blue_' : ''),
                 suffix:'.png',
                 start: 0,
                 end: 2,
@@ -50,7 +50,7 @@ export class PlayerFactory {
         this.scene.anims.create({
             key: 'WALKDOWN',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'player_front_' + (teamId==0 ? 'blue_' : ''),
+                prefix: 'player_front_' + (teamId!==0 ? 'blue_' : ''),
                 suffix:'.png',
                 start: 0,
                 end: 2,
@@ -62,7 +62,7 @@ export class PlayerFactory {
         this.scene.anims.create({
             key: 'WALKSIDE',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'player_side' + (teamId==0 ? '_blue_' : ''),
+                prefix: 'player_side' + (teamId!==0 ? '_blue_' : ''),
                 suffix:'.png',
                 start: 0,
                 end: 2,

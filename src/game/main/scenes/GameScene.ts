@@ -175,8 +175,8 @@ export class GameScene extends Scene {
         for (let i = 0; i < Object.keys(data.playersStartData).length; i++) {
             let key = Object.keys(data.playersStartData)[i];
             let player = data.playersStartData[key];
-            let teamId = 0;
-            if (player.team !== "blue") {
+            let teamId = 0;//red
+            if (player.team === "blue") {
                 teamId = 1;
             }
             let ctrlID = -1;
