@@ -24,15 +24,19 @@ export class CheckToModuleToTake implements ScriptComponent{
 
     updateScript(delta: number) {
 
+        // Get player Input component
+        let playerIn = this.playerEnt.getFirstComponentByName<InputComponent>(InputComponent.name);
+
         // We check if we have to leavr a module
         if(this.carriedModule){
-
+            if (playerIn.isOFF("TAKEMODULE")) {
+                this.carriedModule.leave();
+                this.carriedModule = null;
+            }
         }
         else {
             // Get current player Physic Body
             let playerPhys = this.playerEnt.getFirstComponentByName<PhysicGenericComponent>(PhysicGenericComponent.name);
-            // Get player Input component
-            let playerIn = this.playerEnt.getFirstComponentByName<InputComponent>(InputComponent.name);
 
             // Loop into the list,
             this.moduleList.forEach((modEnt) => {
