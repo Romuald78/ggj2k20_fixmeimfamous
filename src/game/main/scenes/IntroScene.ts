@@ -1,6 +1,6 @@
 import {phaserReactService} from "../../phaser/PhaserReactService";
 import {Scene} from "phaser";
-import {GAME_SCENE_KEY} from "./GameScene";
+import {MENU_SCENE_KEY} from "./MenuScene";
 
 export const INTRO_SCENE_KEY: string = "IntroScene";
 
@@ -103,7 +103,6 @@ export class IntroScene extends Scene {
     }
 
     create(): void {
-        phaserReactService.notifySceneReadyEvent(GAME_SCENE_KEY);
 
         // Get screen dimensions
         let W = this.game.canvas.width;
@@ -127,6 +126,8 @@ export class IntroScene extends Scene {
         scaleRatio = Math.min( W/this.logoPhaser.width, H/this.logoPhaser.height ) * 0.9;
         this.logoPhaser.setScale(scaleRatio, scaleRatio);
         this.logoPhaser.setTint(0);
+
+        phaserReactService.notifySceneReadyEvent(this.scene.key);
     }
 
     update(time, delta): void {
@@ -163,7 +164,7 @@ export class IntroScene extends Scene {
         }
         else {
             // Start the game
-            this.scene.start(GAME_SCENE_KEY);
+            this.scene.start(MENU_SCENE_KEY);
         }
 
     }

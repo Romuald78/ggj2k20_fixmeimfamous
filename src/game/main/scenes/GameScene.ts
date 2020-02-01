@@ -16,6 +16,10 @@ import {CameraFactory} from "../ggj2020/CameraFactory";
 import {MapFactory} from "../ggj2020/MapFactory";
 export const GAME_SCENE_KEY: string = "GameScene";
 
+let Stats = require("stats.js");
+let stats = new Stats();
+stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild( stats.dom );
 
 export class GameScene extends Scene {
     eventEmitter: EventEmitter = new EventEmitter();
@@ -78,7 +82,8 @@ export class GameScene extends Scene {
         });
     }
 
-    create(): void {
+    create(data): void {
+        console.log(data);
         this.inputTest();
         this.ecsWorld = new ECSWorld(this);
 
@@ -132,16 +137,14 @@ export class GameScene extends Scene {
 
 
         console.log("GameScene Created");
-        phaserReactService.notifySceneReadyEvent(GAME_SCENE_KEY);
+        phaserReactService.notifySceneReadyEvent(this.scene.key);
 
     }
 
     update(time, delta): void {
-
+        stats.begin();
         this.ecsWorld.update(delta);
-
-
-
+        stats.end();
     }
 
 }

@@ -1,5 +1,6 @@
 import { Scene } from "phaser";
 import { INTRO_SCENE_KEY } from "./IntroScene";
+import {phaserReactService} from "../../phaser/PhaserReactService";
 
 export const LOADER_SCENE_KEY: string = "LoaderScene";
 
@@ -75,6 +76,7 @@ export class LoaderScene extends Scene {
         // PLAYER ANIMATION (ATLAS)
         this.load.atlas('atlas', 'assets/main_atlas/main_atlas.png', 'assets/main_atlas/main_atlas.json');
 
+        phaserReactService.notifySceneReadyEvent(this.scene.key);
     }
 
     create(): void {

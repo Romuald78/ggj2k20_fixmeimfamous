@@ -6,7 +6,6 @@ import {Route} from 'react-router-dom'
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import HomePage from "./page/HomePage";
-import GamePage from "./page/GamePage";
 
 class App extends React.Component<{},{}> {
     render() {
@@ -25,7 +24,6 @@ class App extends React.Component<{},{}> {
                     <div>
                         <Switch>
                             <Route exact path='/' component={HomePage}/>
-                            <Route exact path='/game' component={GamePage}/>
                         </Switch>
                     </div>
                 </MuiThemeProvider>

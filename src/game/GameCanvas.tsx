@@ -6,6 +6,7 @@ import {LoaderScene} from "./main/scenes/LoaderScene";
 import {IntroScene} from "./main/scenes/IntroScene";
 import {GameScene} from "./main/scenes/GameScene";
 import {Game,Types} from "phaser";
+import {MenuScene} from "./main/scenes/MenuScene";
 
 interface State {
 }
@@ -31,9 +32,9 @@ class GameCanvas extends React.Component<{}, State> {
                     height: offsetHeight + "px"
                 }
             });
-            let scenes: any[] = [BootScene, LoaderScene, IntroScene, GameScene];
+            let scenes: any[] = [BootScene, LoaderScene, IntroScene, GameScene,MenuScene];
             this.config = {
-                title: "Croco",
+                title: "FixMe!",
                 url: "",
                 version: "1.0",
                 width: offsetWidth,
