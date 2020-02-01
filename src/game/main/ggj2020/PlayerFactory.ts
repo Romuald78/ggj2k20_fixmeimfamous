@@ -9,6 +9,7 @@ import { PlayerMovement } from "./PlayerMovement";
 import { GfxFollowPhysics } from "../ecs/system/script/GfxFollowPhysics";
 import { InputComponent } from "../ecs/system/controls/InputComponent";
 import * as GameConstants from "./GameConstants";
+import {CheckToModuleToTake} from "./CheckModuleToTake";
 
 export class PlayerFactory {
 
@@ -17,7 +18,7 @@ export class PlayerFactory {
     }
 
 
-    public create(initX: number, initY: number, ctrlID: number, teamId: number): Entity {
+    public create(initX: number, initY: number, ctrlID: number, teamId: number, modEntities:Entity[] ): Entity {
         let entity = this.world.createEntity();
 
         //////
@@ -31,7 +32,6 @@ export class PlayerFactory {
         let gfxComp = new GfxGenericComponent<GameObjects.Image>(player, "gfx");
         entity.addComponent(gfxComp);
         player.setTint(teamId == 1 ? 0xA0A0FF : 0xFFA0A0);
-
 
 
         // create animation object
@@ -72,8 +72,10 @@ export class PlayerFactory {
             repeat: -1
         });
 
+
         // Play animation IDLE
         player.anims.play('WALKUP', true);
+
 
         ////
         //Body creation
@@ -85,12 +87,10 @@ export class PlayerFactory {
             // player.height * player.scaleY,
             { mass: 80 },
         );
-
         let playerBody = Matter.Body.create({
             parts: [circle,],
         });
         playerBody.frictionAir = GameConstants.PLAYER_MOVE_FRICTION;
-
         let physicBodyComponent = new PhysicGenericComponent(playerBody);
         entity.addComponent(physicBodyComponent);
 
@@ -103,20 +103,31 @@ export class PlayerFactory {
             playerInput.register("WALK_RIGHT", { type: "key", device_num: 0, input_ref: "d", threshold: 0 });
             playerInput.register("WALK_UP", { type: "key", device_num: 0, input_ref: "z", threshold: 0 });
             playerInput.register("WALK_DOWN", { type: "key", device_num: 0, input_ref: "s", threshold: 0 });
+            playerInput.register("TAKEMODULE", { type: "key", device_num: 0, input_ref: " ", threshold: 0 });
         }
         else {
             playerInput.register("WALK_LEFT", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTH", threshold: -0.2 });
             playerInput.register("WALK_RIGHT", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTH", threshold: 0.2 });
             playerInput.register("WALK_UP", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTV", threshold: -0.2 });
             playerInput.register("WALK_DOWN", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTV", threshold: 0.2 });
+            playerInput.register("WALK_LEFT", { type: "button", device_num: ctrlID, input_ref: "CROSSL", threshold: 0 });
+            playerInput.register("WALK_RIGHT", { type: "button", device_num: ctrlID, input_ref: "CROSSR", threshold: 0 });
+            playerInput.register("WALK_UP", { type: "button", device_num: ctrlID, input_ref: "CROSSU", threshold: 0 });
+            playerInput.register("WALK_DOWN", { type: "button", device_num: ctrlID, input_ref: "CROSSD", threshold: 0 });
+            playerInput.register("TAKEMODULE", { type: "button", device_num: ctrlID, input_ref: "A", threshold: 0 });
         }
         entity.addComponent(playerInput);
+
 
         let playerMov = entity.addComponent(new PlayerMovement(physicBodyComponent.getBody(), player, playerInput));
         entity.addComponent(playerMov);
 
+
         let gfxfollow = entity.addComponent(new GfxFollowPhysics(gfxComp, physicBodyComponent,0, GameConstants.playerHeightOF7));
         entity.addComponent(gfxfollow);
+
+        let takeLeave = entity.addComponent(new CheckToModuleToTake(entity, modEntities));
+        entity.addComponent(takeLeave);
 
         return entity;
     }

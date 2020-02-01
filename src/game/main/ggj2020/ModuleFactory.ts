@@ -7,7 +7,8 @@ import { PhysicGenericComponent } from "../ecs/system/physics/PhysicGenericCompo
 import * as Matter from "matter-js";
 import { GfxFollowPhysics } from "../ecs/system/script/GfxFollowPhysics";
 import * as GameConstants from "./GameConstants";
-import {ModuleID} from "./ModuleID";
+import {ModuleInfo} from "./ModuleInfo";
+import {SetGridPosition} from "./SetGridPosition";
 
 export class ModuleFactory {
 
@@ -44,8 +45,8 @@ export class ModuleFactory {
         module.anims.play('MODULE_IDLE'+idmodule, true);
 
         // Add module ID
-        let modID = entity.addComponent(new ModuleID(idmodule));
-        entity.addComponent(modID);
+        let modInfo = entity.addComponent(new ModuleInfo(idmodule));
+        entity.addComponent(modInfo);
 
         ////
         //Body creation
@@ -67,9 +68,12 @@ export class ModuleFactory {
         let physicBodyComponent = new PhysicGenericComponent(moduleBody);
         entity.addComponent(physicBodyComponent);
 
-
         let gfxfollow = entity.addComponent(new GfxFollowPhysics(gfxComp, physicBodyComponent));
         entity.addComponent(gfxfollow);
+
+        let setGrid = entity.addComponent(new SetGridPosition(physicBodyComponent,modInfo));
+        entity.addComponent(setGrid);
+
 
         return entity;
     }

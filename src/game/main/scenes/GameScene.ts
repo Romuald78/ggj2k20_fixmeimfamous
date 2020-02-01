@@ -16,6 +16,7 @@ import {CameraFactory} from "../ggj2020/CameraFactory";
 import * as Matter from "matter-js";
 import {physicWorld} from "../ecs/system/physics/PhysicWorld";
 import {MapFactory} from "../ggj2020/MapFactory";
+import {ModuleInfo} from "../ggj2020/ModuleInfo";
 export const GAME_SCENE_KEY: string = "GameScene";
 
 
@@ -151,21 +152,28 @@ export class GameScene extends Scene {
 
 
 
-        let playerFactory = new PlayerFactory(this.ecsWorld, this);
-
-        let playerList:PhysicGenericComponent[] = [];
-        // create players at appropriate locations with approprirate controllers !
-        for (let i = 0; i < 4; i++) {
-            let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2);
-            let phy:PhysicGenericComponent = ent.getFirstComponentByName( "PhysicGenericComponent" );
-            playerList.push( phy );
-        }
 
 
         let moduleFactory = new ModuleFactory(this.ecsWorld, this);
-        for (let i = 1; i <= 5; i++) {
-            moduleFactory.create(i, 500+(i%2)*GameConstants.moduleWidthWU, 500+Math.round(i/2)*GameConstants.moduleHeightWU);
+        let dw = GameConstants.MAP_W - 2*GameConstants.moduleWidthWU;
+        let dh = GameConstants.MAP_H - 2*GameConstants.moduleHeightWU;
+        let moduleList:Entity[] = [];
+        for (let i = 1; i <= 20; i++) {
+            let modEnt = moduleFactory.create( (i%5)+1, Math.random()*dw+GameConstants.moduleWidthWU, Math.random()*dh+GameConstants.moduleHeightWU);
+            let modInfo:ModuleInfo = modEnt.getFirstComponentByName<ModuleInfo>("ModuleInfo");
+            moduleList.push(modEnt);
         }
+
+        let playerFactory = new PlayerFactory(this.ecsWorld, this);
+        let playerList:Entity[] = [];
+        // create players at appropriate locations with approprirate controllers !
+        for (let i = 0; i < 4; i++) {
+            let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2, moduleList);
+            let phy:PhysicGenericComponent = ent.getFirstComponentByName( "PhysicGenericComponent" );
+            playerList.push( ent );
+        }
+
+
 
         let camFactory = new CameraFactory(this.ecsWorld,this);
         camFactory.create(playerList);

@@ -15,7 +15,7 @@ export class CameraFactory {
     constructor(private world: ECSWorld, private scene: Scene) {
     }
 
-    public create(playerList: PhysicGenericComponent[]): Entity {
+    public create(playerList: Entity[]): Entity {
         let entity = this.world.createEntity();
 
         // Create camera main for this scene

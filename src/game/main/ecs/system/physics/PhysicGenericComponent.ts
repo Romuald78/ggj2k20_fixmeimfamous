@@ -5,7 +5,7 @@ import {physicWorld} from "./PhysicWorld";
 export class PhysicGenericComponent implements Component{
 
     constructor(private body:Matter.Body,private name:string=PhysicGenericComponent.name) {
-        Matter.World.add(physicWorld.world, body);
+        Matter.World.add(physicWorld.world, this.body);
     }
 
     getBody():Matter.Body{
@@ -22,5 +22,18 @@ export class PhysicGenericComponent implements Component{
     getY(){
         return this.body.position.y;
     }
+
+    enable(){
+        Matter.World.add(physicWorld.world, this.body);
+    }
+
+    disable() {
+        Matter.World.remove( physicWorld.world, this.body );
+    }
+
+    setPosition(otherBody:PhysicGenericComponent){
+        Matter.Body.setPosition(this.getBody(),{x:otherBody.getX(), y:otherBody.getY()} );
+    }
+
 
 }
