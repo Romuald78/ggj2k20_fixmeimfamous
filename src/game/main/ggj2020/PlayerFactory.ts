@@ -32,14 +32,13 @@ export class PlayerFactory {
         player.setScale(GameConstants.playerWidthWU / player.width, GameConstants.playerHeightWU / player.height);
         let gfxComp = new GfxGenericComponent<GameObjects.Image>(player, "gfx");
         entity.addComponent(gfxComp);
-        player.setTint(teamId == 1 ? 0xA0A0FF : 0xFFA0A0);
 
 
         // create animation object
         this.scene.anims.create({
             key: 'WALKUP',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'player_back_',
+                prefix: 'player_back_' + (teamId==0 ? 'blue_' : ''),
                 suffix:'.png',
                 start: 0,
                 end: 2,
@@ -51,7 +50,7 @@ export class PlayerFactory {
         this.scene.anims.create({
             key: 'WALKDOWN',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'player_front_',
+                prefix: 'player_front_' + (teamId==0 ? 'blue_' : ''),
                 suffix:'.png',
                 start: 0,
                 end: 2,
@@ -63,7 +62,7 @@ export class PlayerFactory {
         this.scene.anims.create({
             key: 'WALKSIDE',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'player_side',
+                prefix: 'player_side' + (teamId==0 ? '_blue_' : ''),
                 suffix:'.png',
                 start: 0,
                 end: 2,

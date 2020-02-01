@@ -207,8 +207,6 @@
             <key type="filename">player_front/player_front_1.png</key>
             <key type="filename">player_front/player_front_2.png</key>
             <key type="filename">player_side/player_side0.png</key>
-            <key type="filename">player_side/player_side1.png</key>
-            <key type="filename">player_side/player_side2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -220,6 +218,31 @@
                 <rect>16,16,32,32</rect>
                 <key>scale9Paddings</key>
                 <rect>16,16,32,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">player_back/player_back_blue_0.png</key>
+            <key type="filename">player_back/player_back_blue_1.png</key>
+            <key type="filename">player_back/player_back_blue_2.png</key>
+            <key type="filename">player_front/player_front_blue_0.png</key>
+            <key type="filename">player_front/player_front_blue_1.png</key>
+            <key type="filename">player_front/player_front_blue_2.png</key>
+            <key type="filename">player_side/player_side1.png</key>
+            <key type="filename">player_side/player_side2.png</key>
+            <key type="filename">player_side/player_side_blue_0.png</key>
+            <key type="filename">player_side/player_side_blue_1.png</key>
+            <key type="filename">player_side/player_side_blue_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>48,48,96,96</rect>
+                <key>scale9Paddings</key>
+                <rect>48,48,96,96</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
