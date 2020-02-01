@@ -13,6 +13,7 @@ import {RecipeFactory} from "../ggj2020/RecipeFactory";
 import * as GameConstants from "../ggj2020/GameConstants";
 import {PhysicGenericComponent} from "../ecs/system/physics/PhysicGenericComponent";
 import {CameraFactory} from "../ggj2020/CameraFactory";
+import {MapFactory} from "../ggj2020/MapFactory";
 export const GAME_SCENE_KEY: string = "GameScene";
 
 
@@ -92,6 +93,7 @@ export class GameScene extends Scene {
         });
 
         // Create background
+        let map = new MapFactory(this.ecsWorld,this.scene.scene).create();
         let bg = this.add.sprite(0,0, "background");
         bg.setOrigin(0,0);
         bg.setScale(GameConstants.MAP_W/bg.width,GameConstants.MAP_H/bg.height);

@@ -12,4 +12,4 @@ xcopy /s .\build .\docker\www\
 cd docker
 
 rem RUN DOCKER
-docker build -t rphstudio-croco .
+docker build -t rphstudio-fixme .
