@@ -9,6 +9,7 @@ import { GfxGenericComponent } from "../ecs/system/gfx/GfxGenericComponent";
 import { PlayerMovement } from "../ggj2020/PlayerMovement";
 import { Life } from "../objects/components/Life";
 import { PlayerFactory } from "../ggj2020/PlayerFactory";
+import {RecipeFactory} from "../ggj2020/RecipeFactory";
 
 export const GAME_SCENE_KEY: string = "GameScene";
 
@@ -89,6 +90,12 @@ export class GameScene extends Scene {
         });
 
 
+        // RECIPES
+        let recipeFactory = new RecipeFactory(this.ecsWorld, this);
+        recipeFactory.create(1);
+        recipeFactory.create(2);
+
+
         //this.cameras.main.setZoom(0.5);
 
         let playerFactory = new PlayerFactory(this.ecsWorld, this);
@@ -98,16 +105,14 @@ export class GameScene extends Scene {
             playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2);
         }
 
-        let moduleFactory = new ModuleFactory(this.ecsWorld, this);
-        /*for (let i = 0; i < 4; i++) {
-            moduleFactory.create(i + 1, i * 100 + 100, i * 20 + 150);
-        }*/
 
-        //----------------------------------------------
-        // Create MAP entity
-        //----------------------------------------------
-        //let mapFactory = new MapFactory(this.ecsWorld, this);
-        //this.mapEntity = mapFactory.createMap(this.players, liftFactory);
+        let moduleFactory = new ModuleFactory(this.ecsWorld, this);
+        for (let i = 1; i <= 4; i++) {
+            moduleFactory.create(i, i * 100 + 100, i * 20 + 150);
+        }
+
+
+
 
         this.gameCam = new GameCamera(this);
 

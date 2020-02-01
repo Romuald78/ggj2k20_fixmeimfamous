@@ -8,6 +8,7 @@ import * as Matter from "matter-js";
 import { PlayerMovement } from "./PlayerMovement";
 import { GfxFollowPhysics } from "../ecs/system/script/GfxFollowPhysics";
 import { InputComponent } from "../ecs/system/controls/InputComponent";
+import * as GameConstants from "./GameConstants";
 
 export class PlayerFactory {
 
@@ -15,8 +16,6 @@ export class PlayerFactory {
 
     }
 
-    public widthWU = 100;//cm
-    public heightWU = this.widthWU;//cm
 
     public create(initX: number, initY: number, ctrlID: number, teamId: number): Entity {
         let entity = this.world.createEntity();
@@ -28,7 +27,7 @@ export class PlayerFactory {
         let atlasName: string = "atlas";
 
         let player = this.scene.add.sprite(initX, initY, atlasName);
-        player.setScale(this.widthWU / player.width, this.heightWU / player.height);
+        player.setScale(GameConstants.playerWidthWU / player.width, GameConstants.playerHeightWU / player.height);
         let gfxComp = new GfxGenericComponent<GameObjects.Image>(player, "gfx");
         entity.addComponent(gfxComp);
         player.setTint(teamId == 1 ? 0xA0A0FF : 0xFFA0A0);
@@ -39,39 +38,39 @@ export class PlayerFactory {
         this.scene.anims.create({
             key: 'WALKUP',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'player_walkup',
-                start: 1,
-                end: 3,
-                zeroPad: 2
+                prefix: 'player_back_',
+                suffix:'.png',
+                start: 0,
+                end: 2,
+                zeroPad: 1
             }),
             frameRate: 3,
             repeat: -1
-        })
-        /*
+        });
         this.scene.anims.create({
-            key: 'walk',
+            key: 'WALKDOWN',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'walk',
-                start: 1,
-                end: 1,
-                zeroPad: 2
+                prefix: 'player_front_',
+                suffix:'.png',
+                start: 0,
+                end: 2,
+                zeroPad: 1
             }),
-            frameRate: 25,
+            frameRate: 3,
             repeat: -1
         });
-
         this.scene.anims.create({
-            key: 'carry',
+            key: 'WALKSIDE',
             frames: this.scene.anims.generateFrameNames(atlasName, {
-                prefix: 'carry',
-                start: 1,
-                end: 1,
-                zeroPad: 2
+                prefix: 'player_side',
+                suffix:'.png',
+                start: 0,
+                end: 2,
+                zeroPad: 1
             }),
-            frameRate: 25,
+            frameRate: 3,
             repeat: -1
         });
-        // */
 
         // Play animation IDLE
         player.anims.play('WALKUP', true);
@@ -82,7 +81,7 @@ export class PlayerFactory {
         let originX = player.x;
         let originY = player.y;
         let circle = Matter.Bodies.circle(originX, originY,
-            this.widthWU / 2,
+            GameConstants.playerWidthWU / 4,
             // player.height * player.scaleY,
             { mass: 80 },
         );
@@ -90,6 +89,7 @@ export class PlayerFactory {
         let playerBody = Matter.Body.create({
             parts: [circle,],
         });
+        playerBody.frictionAir = GameConstants.PLAYER_MOVE_FRICTION;
 
         let physicBodyComponent = new PhysicGenericComponent(playerBody);
         entity.addComponent(physicBodyComponent);

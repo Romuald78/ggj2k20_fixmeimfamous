@@ -148,9 +148,55 @@
       },
       "rotated": false,
       "trimmed": false
+    },
+
+    {
+      "filename": "module_1_01",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+
+    {
+      "filename": "module_2_01",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+
+    {
+      "filename": "module_3_01",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
+    },
+
+    {
+      "filename": "module_4_01",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 325,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false
     }
-
-
 
   ]
 }

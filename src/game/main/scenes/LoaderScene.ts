@@ -67,11 +67,11 @@ export class LoaderScene extends Scene {
         this.load.image('logoPhaser', 'assets/misc/logoPhaser.jpg');
         this.load.image('logoRPHStudio', 'assets/misc/logoRPHStudio.png');
 
-        // Background image (sky)
-        this.load.image('sky', 'assets/game/map/backgrounds/Sky.png');
+        // Background image (map)
+        this.load.image('background', 'assets/map/map.png');
 
         // PLAYER ANIMATION (ATLAS)
-        this.load.atlas('atlas', 'assets/game/characters/player_atlas.png', 'assets/game/characters/player.json');
+        this.load.atlas('atlas', 'assets/main_atlas/main_atlas.png', 'assets/main_atlas/main_atlas.json');
 
     }
 
