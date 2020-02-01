@@ -72,6 +72,7 @@ export class LoaderScene extends Scene {
 
         // Background image (map)
         this.load.image('background', 'assets/map/map.png');
+        this.load.image('grass', 'assets/map/grass.png');
 
         // PLAYER ANIMATION (ATLAS)
         this.load.atlas('atlas', 'assets/main_atlas/main_atlas.png', 'assets/main_atlas/main_atlas.json');

@@ -13,6 +13,8 @@ import {RecipeFactory} from "../ggj2020/RecipeFactory";
 import * as GameConstants from "../ggj2020/GameConstants";
 import {PhysicGenericComponent} from "../ecs/system/physics/PhysicGenericComponent";
 import {CameraFactory} from "../ggj2020/CameraFactory";
+import * as Matter from "matter-js";
+import {physicWorld} from "../ecs/system/physics/PhysicWorld";
 import {MapFactory} from "../ggj2020/MapFactory";
 export const GAME_SCENE_KEY: string = "GameScene";
 
@@ -99,9 +101,53 @@ export class GameScene extends Scene {
 
         // Create background
         let map = new MapFactory(this.ecsWorld,this.scene.scene).create();
+        let grass = this.add.tileSprite(GameConstants.MAP_W/2, GameConstants.MAP_H/2, 3.0*GameConstants.MAP_W,3.0*GameConstants.MAP_H, "grass");
         let bg = this.add.sprite(0,0, "background");
         bg.setOrigin(0,0);
         bg.setScale(GameConstants.MAP_W/bg.width,GameConstants.MAP_H/bg.height);
+
+        //------------------------------------------------------------------------------
+        // Physical borders
+        let borderBox:Matter.Body;
+        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W/2, 0,
+            GameConstants.MAP_W, GameConstants.BORDER_THICKNESS,
+        );
+        borderBox = Matter.Body.create({
+            isStatic: true,
+            mass: Infinity,
+            parts: [borderBox,],
+        });
+        Matter.World.add(physicWorld.world, borderBox);
+        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W/2, GameConstants.MAP_H,
+            GameConstants.MAP_W, GameConstants.BORDER_THICKNESS,
+        );
+        borderBox = Matter.Body.create({
+            isStatic: true,
+            mass: Infinity,
+            parts: [borderBox,],
+        });
+        Matter.World.add(physicWorld.world, borderBox);
+        borderBox = Matter.Bodies.rectangle(0, GameConstants.MAP_H/2,
+            GameConstants.BORDER_THICKNESS,GameConstants.MAP_H
+        );
+        borderBox = Matter.Body.create({
+            isStatic: true,
+            mass: Infinity,
+            parts: [borderBox,],
+        });
+        Matter.World.add(physicWorld.world, borderBox);
+        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W, GameConstants.MAP_H/2,
+            GameConstants.BORDER_THICKNESS,GameConstants.MAP_H
+        );
+        borderBox = Matter.Body.create({
+            isStatic: true,
+            mass: Infinity,
+            parts: [borderBox,],
+        });
+        Matter.World.add(physicWorld.world, borderBox);
+
+
+
 
         // RECIPES
         let recipeFactory = new RecipeFactory(this.ecsWorld, this);

@@ -35,7 +35,7 @@ export class CameraZoom implements ScriptComponent {
         } );
 
 
-        this.gameCam.zoom(minX,minY,maxX,maxY);
+        this.gameCam.zoom(minX,minY,maxX,maxY,delta);
 
         this.gameCam.update(delta);
     }
