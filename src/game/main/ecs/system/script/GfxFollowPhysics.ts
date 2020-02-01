@@ -18,7 +18,7 @@ export class GfxFollowPhysics implements ScriptComponent{
 
     updateScript(delta: number) {
         this.gfx.setPosition(this.phy.getBody().position.x+this.dx, this.phy.getBody().position.y+this.dy);
-        this.gfx.setRotation(this.phy.getBody().angle);
+    //    this.gfx.setRotation(this.phy.getBody().angle);
     }
 
 }

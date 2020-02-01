@@ -106,10 +106,10 @@ export class PlayerFactory {
             playerInput.register("TAKEMODULE", { type: "key", device_num: 0, input_ref: " ", threshold: 0 });
         }
         else {
-            playerInput.register("WALK_LEFT", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTH", threshold: -0.2 });
-            playerInput.register("WALK_RIGHT", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTH", threshold: 0.2 });
-            playerInput.register("WALK_UP", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTV", threshold: -0.2 });
-            playerInput.register("WALK_DOWN", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTV", threshold: 0.2 });
+            playerInput.register("WALK_LEFT", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTH", threshold: -0.5 });
+            playerInput.register("WALK_RIGHT", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTH", threshold: 0.5 });
+            playerInput.register("WALK_UP", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTV", threshold: -0.5 });
+            playerInput.register("WALK_DOWN", { type: "gamepadaxis", device_num: ctrlID, input_ref: "LEFTV", threshold: 0.5 });
             playerInput.register("WALK_LEFT", { type: "button", device_num: ctrlID, input_ref: "CROSSL", threshold: 0 });
             playerInput.register("WALK_RIGHT", { type: "button", device_num: ctrlID, input_ref: "CROSSR", threshold: 0 });
             playerInput.register("WALK_UP", { type: "button", device_num: ctrlID, input_ref: "CROSSU", threshold: 0 });

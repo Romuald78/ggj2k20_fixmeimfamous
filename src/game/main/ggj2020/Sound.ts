@@ -10,6 +10,8 @@ export class Sound implements Component{
 
     constructor(private scene:Scene,soundKey:string){
         this.music = this.scene.sound.add('theme');
-        this.music.play();
+        if(!this.music.isPlaying){
+            this.music.play();
+        }
     }
 }

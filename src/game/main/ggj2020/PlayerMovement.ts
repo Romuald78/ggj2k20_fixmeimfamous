@@ -11,7 +11,6 @@ export class PlayerMovement implements ScriptComponent {
 
     public enableControl = false;
 
-    private moveDirs = 0;
     private defaultScaleX;
     private defaultScaleY;
 
@@ -26,16 +25,16 @@ export class PlayerMovement implements ScriptComponent {
     }
 
     public updateScript(delta: number) {
-        Matter.Body.setAngle(this.playerBody, 0);
         //Matter.Body.setAngularVelocity(this.playerBody, 0);
         let dx = -this.playerInput.getAnalogValue("WALK_LEFT") + this.playerInput.getAnalogValue("WALK_RIGHT");
         let dy = -this.playerInput.getAnalogValue("WALK_UP") + this.playerInput.getAnalogValue("WALK_DOWN");
-
+        let realAng = Math.atan2(dy,dx);
         if(    this.playerInput.isON("WALK_LEFT")
             || this.playerInput.isON("WALK_RIGHT")
             || this.playerInput.isON("WALK_UP")
             || this.playerInput.isON("WALK_DOWN") ){
-            let ang = Math.atan2(dy,dx)*180/Math.PI;
+            let ang = realAng*180/Math.PI;
+            console.log(dx + " / " + dy + " / " +realAng);
             ang = (ang+360)%360;
             if(ang >= 45 && ang < 135){
                 // DOWN
@@ -55,11 +54,22 @@ export class PlayerMovement implements ScriptComponent {
                 this.player.play("WALKSIDE");
                 this.player.setScale(-this.defaultScaleX,this.defaultScaleY);
             }
+            // check if we have to update the angle or not
+            Matter.Body.setAngle(this.playerBody, realAng);
         }
 
-        // Set Z depth according to Y level
-        this.player.setDepth(Math.round(this.player.y*1000))
 
-        Matter.Body.applyForce(this.playerBody, this.playerBody.position, Matter.Vector.create(dx*GameConstants.PLAYER_MOVE_FORCE, dy*GameConstants.PLAYER_MOVE_FORCE));
+
+        // Set Z depth according to Y level
+        this.player.setDepth(Math.round(this.player.y*1000));
+
+        // Apply force to move
+        let forceModifier = 1;
+        if(this.playerInput.isON("TAKEMODULE")){
+            forceModifier = 0.5;
+        }
+        Matter.Body.applyForce(this.playerBody, this.playerBody.position, Matter.Vector.create(dx*GameConstants.PLAYER_MOVE_FORCE*forceModifier, dy*GameConstants.PLAYER_MOVE_FORCE*forceModifier));
+
+
     }
 }

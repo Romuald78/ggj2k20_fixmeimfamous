@@ -35,11 +35,13 @@ export class SetGridPosition implements ScriptComponent{
     updateScript(delta: number) {
 
         if( this.modInfo.getCarryMode() ){
-            let phyCarrier = this.modInfo.getPhyCarrier();
+            let phyCarrier:PhysicGenericComponent = this.modInfo.getPhyCarrier();
             if( this.previousCarryMode == false ){
                 this.phyModule.disable();
             }
-            this.phyModule.setPosition(phyCarrier);
+            let x = phyCarrier.getFrontX(64);
+            let y = phyCarrier.getFrontY(64);
+            this.phyModule.setPosition(x,y);
         }
         else{
             if( this.previousCarryMode == true ) {
