@@ -1,3 +1,4 @@
+import { RuleFactory } from './../ggj2020/RuleFactory';
 import { ModuleFactory } from './../ggj2020/ModuleFactory';
 import { phaserReactService } from "../../phaser/PhaserReactService";
 import { GameObjects, Scene } from "phaser";
@@ -9,20 +10,20 @@ import { GfxGenericComponent } from "../ecs/system/gfx/GfxGenericComponent";
 import { PlayerMovement } from "../ggj2020/PlayerMovement";
 import { Life } from "../objects/components/Life";
 import { PlayerFactory } from "../ggj2020/PlayerFactory";
-import {RecipeFactory} from "../ggj2020/RecipeFactory";
+import { RecipeFactory } from "../ggj2020/RecipeFactory";
 import * as GameConstants from "../ggj2020/GameConstants";
-import {PhysicGenericComponent} from "../ecs/system/physics/PhysicGenericComponent";
-import {CameraFactory} from "../ggj2020/CameraFactory";
+import { PhysicGenericComponent } from "../ecs/system/physics/PhysicGenericComponent";
+import { CameraFactory } from "../ggj2020/CameraFactory";
 import * as Matter from "matter-js";
-import {physicWorld} from "../ecs/system/physics/PhysicWorld";
-import {MapFactory} from "../ggj2020/MapFactory";
-import {ModuleInfo} from "../ggj2020/ModuleInfo";
+import { physicWorld } from "../ecs/system/physics/PhysicWorld";
+import { MapFactory } from "../ggj2020/MapFactory";
+import { ModuleInfo } from "../ggj2020/ModuleInfo";
 export const GAME_SCENE_KEY: string = "GameScene";
 
 let Stats = require("stats.js");
 let stats = new Stats();
-stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild( stats.dom );
+stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild(stats.dom);
 
 export class GameScene extends Scene {
     eventEmitter: EventEmitter = new EventEmitter();
@@ -102,16 +103,16 @@ export class GameScene extends Scene {
         });
 
         // Create background
-        let map = new MapFactory(this.ecsWorld,this.scene.scene).create();
-        let grass = this.add.tileSprite(GameConstants.MAP_W/2, GameConstants.MAP_H/2, 3.0*GameConstants.MAP_W,3.0*GameConstants.MAP_H, "grass");
-        let bg = this.add.sprite(0,0, "background");
-        bg.setOrigin(0,0);
-        bg.setScale(GameConstants.MAP_W/bg.width,GameConstants.MAP_H/bg.height);
+        let map = new MapFactory(this.ecsWorld, this.scene.scene).create();
+        let grass = this.add.tileSprite(GameConstants.MAP_W / 2, GameConstants.MAP_H / 2, 3.0 * GameConstants.MAP_W, 3.0 * GameConstants.MAP_H, "grass");
+        let bg = this.add.sprite(0, 0, "background");
+        bg.setOrigin(0, 0);
+        bg.setScale(GameConstants.MAP_W / bg.width, GameConstants.MAP_H / bg.height);
 
         //------------------------------------------------------------------------------
         // Physical borders
-        let borderBox:Matter.Body;
-        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W/2, 0,
+        let borderBox: Matter.Body;
+        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W / 2, 0,
             GameConstants.MAP_W, GameConstants.BORDER_THICKNESS,
         );
         borderBox = Matter.Body.create({
@@ -120,7 +121,7 @@ export class GameScene extends Scene {
             parts: [borderBox,],
         });
         Matter.World.add(physicWorld.world, borderBox);
-        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W/2, GameConstants.MAP_H,
+        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W / 2, GameConstants.MAP_H,
             GameConstants.MAP_W, GameConstants.BORDER_THICKNESS,
         );
         borderBox = Matter.Body.create({
@@ -129,8 +130,8 @@ export class GameScene extends Scene {
             parts: [borderBox,],
         });
         Matter.World.add(physicWorld.world, borderBox);
-        borderBox = Matter.Bodies.rectangle(0, GameConstants.MAP_H/2,
-            GameConstants.BORDER_THICKNESS,GameConstants.MAP_H
+        borderBox = Matter.Bodies.rectangle(0, GameConstants.MAP_H / 2,
+            GameConstants.BORDER_THICKNESS, GameConstants.MAP_H
         );
         borderBox = Matter.Body.create({
             isStatic: true,
@@ -138,8 +139,8 @@ export class GameScene extends Scene {
             parts: [borderBox,],
         });
         Matter.World.add(physicWorld.world, borderBox);
-        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W, GameConstants.MAP_H/2,
-            GameConstants.BORDER_THICKNESS,GameConstants.MAP_H
+        borderBox = Matter.Bodies.rectangle(GameConstants.MAP_W, GameConstants.MAP_H / 2,
+            GameConstants.BORDER_THICKNESS, GameConstants.MAP_H
         );
         borderBox = Matter.Body.create({
             isStatic: true,
@@ -154,53 +155,53 @@ export class GameScene extends Scene {
         this.recipeFactory.create(2);
 
         let moduleFactory = new ModuleFactory(this.ecsWorld, this);
-        let dw = GameConstants.MAP_W - 2*GameConstants.moduleWidthWU;
-        let dh = GameConstants.MAP_H - 2*GameConstants.moduleHeightWU;
-        let moduleList:Entity[] = [];
+        let dw = GameConstants.MAP_W - 2 * GameConstants.moduleWidthWU;
+        let dh = GameConstants.MAP_H - 2 * GameConstants.moduleHeightWU;
+        let moduleList: Entity[] = [];
         for (let i = 1; i <= 20; i++) {
-            let modEnt = moduleFactory.create( (i%5)+1, Math.random()*dw+GameConstants.moduleWidthWU, Math.random()*dh+GameConstants.moduleHeightWU);
-            let modInfo:ModuleInfo = modEnt.getFirstComponentByName<ModuleInfo>("ModuleInfo");
+            let modEnt = moduleFactory.create((i % 5) + 1, Math.random() * dw + GameConstants.moduleWidthWU, Math.random() * dh + GameConstants.moduleHeightWU);
+            let modInfo: ModuleInfo = modEnt.getFirstComponentByName<ModuleInfo>("ModuleInfo");
             moduleList.push(modEnt);
         }
 
         let playerFactory = new PlayerFactory(this.ecsWorld, this);
-        let playerList:Entity[] = [];
+        let playerList: Entity[] = [];
         // create players at appropriate locations with approprirate controllers !
         for (let i = 0; i < Object.keys(data.playersStartData).length; i++) {
             let key = Object.keys(data.playersStartData)[i];
             let player = data.playersStartData[key];
             let teamId = 0;
-            if(player.team!=="blue"){
+            if (player.team !== "blue") {
                 teamId = 1;
             }
             let ctrlID = -1;
-            console.log("new player : "+player.name);
-            if(player.name ==="Keyboard"){
+            console.log("new player : " + player.name);
+            if (player.name === "Keyboard") {
                 ctrlID = -1;
-            }else{
+            } else {
                 ctrlID = player.name.split("-")[1];
             }
             let radius = 200;
-            let angle = Math.random()*Math.PI/2;
+            let angle = Math.random() * Math.PI / 2;
             let xInit = 0;
             let yInit = 0;
-            if(teamId == 1){
+            if (teamId == 1) {
                 angle += Math.PI;
                 xInit = GameConstants.MAP_W;
                 yInit = GameConstants.MAP_H;
             }
-			let ent:Entity = playerFactory.create(Math.cos(angle)*radius+xInit, Math.sin(angle)*radius+yInit, ctrlID, teamId, moduleList);
-            let phy:PhysicGenericComponent = ent.getFirstComponentByName( "PhysicGenericComponent" );
-            playerList.push( ent );
+            let ent: Entity = playerFactory.create(Math.cos(angle) * radius + xInit, Math.sin(angle) * radius + yInit, ctrlID, teamId, moduleList);
+            let phy: PhysicGenericComponent = ent.getFirstComponentByName("PhysicGenericComponent");
+            playerList.push(ent);
         }
 
 
 
-        let camFactory = new CameraFactory(this.ecsWorld,this);
+        let camFactory = new CameraFactory(this.ecsWorld, this);
         camFactory.create(playerList);
 
-
-
+        let ruleFactory = new RuleFactory(this.ecsWorld, this);
+        ruleFactory.create(moduleList, this.recipeFactory.recipes);
 
         //this.cameras.main.setBackgroundColor("#89fbf9")
         this.cameras.main.setBackgroundColor("#000000")

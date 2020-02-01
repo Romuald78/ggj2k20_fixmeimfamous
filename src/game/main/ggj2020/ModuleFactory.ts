@@ -7,8 +7,9 @@ import { PhysicGenericComponent } from "../ecs/system/physics/PhysicGenericCompo
 import * as Matter from "matter-js";
 import { GfxFollowPhysics } from "../ecs/system/script/GfxFollowPhysics";
 import * as GameConstants from "./GameConstants";
-import {ModuleInfo} from "./ModuleInfo";
-import {SetGridPosition} from "./SetGridPosition";
+import { ModuleInfo } from "./ModuleInfo";
+import { SetGridPosition } from "./SetGridPosition";
+
 
 export class ModuleFactory {
 
@@ -29,7 +30,7 @@ export class ModuleFactory {
 
         // create animation object
         this.scene.anims.create({
-            key: 'MODULE_IDLE'+idmodule,
+            key: 'MODULE_IDLE' + idmodule,
             frames: this.scene.anims.generateFrameNames(atlasName, {
                 prefix: "module_" + idmodule + "/module_" + idmodule + "_",
                 suffix: ".png",
@@ -42,7 +43,7 @@ export class ModuleFactory {
         });
 
         // Play animation IDLE
-        module.anims.play('MODULE_IDLE'+idmodule, true);
+        module.anims.play('MODULE_IDLE' + idmodule, true);
 
         // Add module ID
         let modInfo = entity.addComponent(new ModuleInfo(idmodule));
@@ -71,7 +72,7 @@ export class ModuleFactory {
         let gfxfollow = entity.addComponent(new GfxFollowPhysics(gfxComp, physicBodyComponent));
         entity.addComponent(gfxfollow);
 
-        let setGrid = entity.addComponent(new SetGridPosition(physicBodyComponent,modInfo));
+        let setGrid = entity.addComponent(new SetGridPosition(physicBodyComponent, modInfo));
         entity.addComponent(setGrid);
 
 

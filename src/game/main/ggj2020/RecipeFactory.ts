@@ -1,12 +1,12 @@
-import {ECSWorld} from "../ecs/system/ECSWorld";
-import {Scene} from "phaser";
-import {Entity} from "../ecs/core/Entity";
-import {PhysicGenericComponent} from "../ecs/system/physics/PhysicGenericComponent";
-import {ModuleGrid} from "./ModuleGrid";
+import { ECSWorld } from "../ecs/system/ECSWorld";
+import { Scene } from "phaser";
+import { Entity } from "../ecs/core/Entity";
+import { PhysicGenericComponent } from "../ecs/system/physics/PhysicGenericComponent";
+import { ModuleGrid } from "./ModuleGrid";
 
 export class RecipeFactory {
 
-    recipes:Entity[] = [];
+    public recipes: Entity[] = [];
 
     constructor(private world: ECSWorld, private scene: Scene) {
 
