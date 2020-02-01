@@ -34,6 +34,8 @@ XBOX / NAMES / MayFlash GameCube
  */
 
 import {Component} from "../../core/Component";
+import {Simulate} from "react-dom/test-utils";
+import input = Simulate.input;
 
 export interface Input {
     type:string,
@@ -60,6 +62,7 @@ export class InputComponent implements Component {
     private keyState:{[id:string]:boolean} = {};
     // button states are updated in update loop. When a change is noticed, the linked callbacks are called during update loop as well
     private butState:{[id:string]:{devNum:number,butNum:number,state:boolean}} = {};
+    private axisState:{[id:string]:{devNum:number,butNum:number,state:boolean,input:Input}} = {};
     // callback list is filled using registerEvent method and used both in keyboard events and gamepad button polling
     private callbackList:{ [id:string] : (actionName:string,buttonState:boolean)=>void } = {};
     // List of actions related to a key
@@ -177,6 +180,45 @@ export class InputComponent implements Component {
                 }
             }
         });
+        Object.keys(this.axisState).forEach( (k) =>{
+            let dN = this.axisState[k].devNum;
+            let bN = this.axisState[k].butNum;
+            let st = this.axisState[k].state;
+            let input = this.axisState[k].input;
+            // Check the level for the current button/device
+            let pad = navigator.getGamepads()[dN];
+            if(pad){
+                let but = pad.buttons[bN];
+                if( but ){
+                    let curSt;
+                    let axiNum = parseInt(input.input_ref);
+                    axiNum = this.translateAxisIDs(dN,axiNum);
+                    if( navigator.getGamepads()[dN].axes[axiNum] ){
+                        // check thresholds before update state
+                        if (input.threshold >= 0) {
+                            curSt =  (navigator.getGamepads()[dN].axes[axiNum] > input.threshold);
+                        } else  {
+                            curSt = (navigator.getGamepads()[dN].axes[axiNum] < input.threshold);
+                        }
+                    }
+                        // State change : call the callback (if it exists)
+                        // console.log("state change (device:"+dN+" / button:"+bN+" / "+st+"->"+curSt+")");
+                        // look for action in the button list
+                        Object.keys(this.buttonList).forEach( (k)=>{
+                            let dN2 = this.buttonList[k].device_num;
+                            let bN2 = this.translateAxisIDs( dN2, this.buttonList[k].input_ref );
+                            if( dN==dN2 && bN==bN2 ){
+                                // We have found the action : find it in the callback list
+                                if( this.callbackList[k] ){
+                                    this.callbackList[k](k, curSt);
+                                }
+                            }
+                        } );
+                        // Store new state for future use
+                        this.axisState[k].state = curSt;
+                }
+            }
+        });
     }
     // Check if the keyboard event is linked to a callback
     private checkKeyBoardEvent(evt:KeyboardEvent) {
@@ -250,6 +292,12 @@ export class InputComponent implements Component {
             if( Math.abs(inputObject.threshold) < 0.2 ){
                 console.log("WARNING : this gamepadaxis action has a low threshold value. Please check this value is correct !");
             }
+            let dN = this.gamePadAxisList[actionName].device_num;
+            let bN = this.translateAxisIDs(dN,this.gamePadAxisList[actionName].input_ref);
+            if( this.axisState[dN+"_"+bN+"_"+inputObject.threshold] ){
+                throw new Error("gamePadAxisList state is already registered ("+dN+" / "+bN+"/)");
+            }
+            this.axisState[dN+"_"+bN+"_"+inputObject.threshold] = {devNum:dN, butNum:bN, state:false,input:inputObject};
         }
         else{
             throw new Error("Bad input action type !!");

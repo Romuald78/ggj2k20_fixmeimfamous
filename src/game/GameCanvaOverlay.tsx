@@ -16,7 +16,7 @@ interface State {
 class GameCanvaOverlay extends React.Component<{}, State> {
     state: State = {
         redirectTo:"",
-        visible:false,
+        visible:true,
         overlayStyle: {
             position: "absolute",
             left: "0",

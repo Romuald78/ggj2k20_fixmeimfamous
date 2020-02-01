@@ -13,6 +13,7 @@ export class BootScene extends Scene {
 
 
     create(): void {
+        phaserReactService.notifySceneReadyEvent(this.scene.key);
     }
 
     update(): void {

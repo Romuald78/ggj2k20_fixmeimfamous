@@ -19,6 +19,10 @@ import {MapFactory} from "../ggj2020/MapFactory";
 import {ModuleInfo} from "../ggj2020/ModuleInfo";
 export const GAME_SCENE_KEY: string = "GameScene";
 
+let Stats = require("stats.js");
+let stats = new Stats();
+stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild( stats.dom );
 
 export class GameScene extends Scene {
     eventEmitter: EventEmitter = new EventEmitter();
@@ -81,7 +85,8 @@ export class GameScene extends Scene {
         });
     }
 
-    create(): void {
+    create(data): void {
+        console.log(data);
         this.inputTest();
         this.ecsWorld = new ECSWorld(this);
 
@@ -167,8 +172,20 @@ export class GameScene extends Scene {
         let playerFactory = new PlayerFactory(this.ecsWorld, this);
         let playerList:Entity[] = [];
         // create players at appropriate locations with approprirate controllers !
-        for (let i = 0; i < 4; i++) {
-            let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2, moduleList);
+        for (let i = 0; i < Object.keys(data.playersStartData).length; i++) {
+            let key = Object.keys(data.playersStartData)[i];
+            let player = data.playersStartData[key];
+            let teamId = 0;
+            if(player.team!=="blue"){
+                let teamId = 1;
+            }
+            let ctrlID = -1;
+            if(player.name ==="Keyboard"){
+                ctrlID = -1;
+            }else{
+                ctrlID = player.name.split("-")[1];
+            }
+			let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2, moduleList);
             let phy:PhysicGenericComponent = ent.getFirstComponentByName( "PhysicGenericComponent" );
             playerList.push( ent );
         }
@@ -186,16 +203,14 @@ export class GameScene extends Scene {
 
 
         console.log("GameScene Created");
-        phaserReactService.notifySceneReadyEvent(GAME_SCENE_KEY);
+        phaserReactService.notifySceneReadyEvent(this.scene.key);
 
     }
 
     update(time, delta): void {
-
+        stats.begin();
         this.ecsWorld.update(delta);
-
-
-
+        stats.end();
     }
 
 }
