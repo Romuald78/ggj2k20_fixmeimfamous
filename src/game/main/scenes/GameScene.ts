@@ -180,12 +180,15 @@ export class GameScene extends Scene {
                 let teamId = 1;
             }
             let ctrlID = -1;
+            console.log("new player : "+player.name);
             if(player.name ==="Keyboard"){
                 ctrlID = -1;
             }else{
                 ctrlID = player.name.split("-")[1];
             }
-			let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, i - 1, i % 2, moduleList);
+            let radius = 200;
+            let angle = Math.random()*Math.PI/2;
+			let ent:Entity = playerFactory.create(i * 200 + 200, i * 100 + 300, ctrlID, teamId, moduleList);
             let phy:PhysicGenericComponent = ent.getFirstComponentByName( "PhysicGenericComponent" );
             playerList.push( ent );
         }

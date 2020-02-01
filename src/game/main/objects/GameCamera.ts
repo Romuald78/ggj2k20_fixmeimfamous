@@ -33,6 +33,7 @@ export class GameCamera extends GameObjects.GameObject {
         let ratioX = (maxX-minX+margin)/screen.width;
         let ratioY = (maxY-minY+margin)/screen.height;
         let ratio  = Math.max( ratioX, ratioY );
+        ratio = Math.max(ratio, 0.75);
 
 
         //* beugué O_o
