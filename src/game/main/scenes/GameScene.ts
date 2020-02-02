@@ -1,14 +1,11 @@
 import { RuleFactory } from './../ggj2020/RuleFactory';
 import { ModuleFactory } from './../ggj2020/ModuleFactory';
 import { phaserReactService } from "../../phaser/PhaserReactService";
-import { GameObjects, Scene } from "phaser";
+import { Scene } from "phaser";
 import * as EventEmitter from "eventemitter3";
 import { GameCamera } from "../objects/GameCamera";
 import { ECSWorld } from "../ecs/system/ECSWorld";
 import { Entity } from "../ecs/core/Entity";
-import { GfxGenericComponent } from "../ecs/system/gfx/GfxGenericComponent";
-import { PlayerMovement } from "../ggj2020/PlayerMovement";
-import { Life } from "../objects/components/Life";
 import { PlayerFactory } from "../ggj2020/PlayerFactory";
 import { RecipeFactory } from "../ggj2020/RecipeFactory";
 import * as GameConstants from "../ggj2020/GameConstants";
