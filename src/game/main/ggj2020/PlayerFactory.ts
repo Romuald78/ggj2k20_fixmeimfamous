@@ -29,7 +29,7 @@ export class PlayerFactory {
         let atlasName: string = "atlas";
 
         let player = this.scene.add.sprite(initX, initY, atlasName);
-        player.setScale(GameConstants.playerWidthWU / player.width, GameConstants.playerHeightWU / player.height);
+        player.setScale(GameConstants.playerWidthWU / 192, GameConstants.playerHeightWU / 192);
         let gfxComp = new GfxGenericComponent<GameObjects.Image>(player, "gfx");
         entity.addComponent(gfxComp);
 

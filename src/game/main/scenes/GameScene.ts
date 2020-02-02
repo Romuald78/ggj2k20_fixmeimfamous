@@ -19,6 +19,7 @@ import { physicWorld } from "../ecs/system/physics/PhysicWorld";
 import { MapFactory } from "../ggj2020/MapFactory";
 import { ModuleInfo } from "../ggj2020/ModuleInfo";
 import {CheckModulesAgainstRecipes} from "../ggj2020/CheckModulesAgainstRecipes";
+import {ObstacleFactory} from "../ggj2020/ObstacleFactory";
 export const GAME_SCENE_KEY: string = "GameScene";
 
 let Stats = require("stats.js");
@@ -207,8 +208,13 @@ export class GameScene extends Scene {
 
 
         //this.cameras.main.setBackgroundColor("#89fbf9")
-        this.cameras.main.setBackgroundColor("#000000")
+        this.cameras.main.setBackgroundColor("#000000");
 
+        // Create random obstacles
+        let of = new ObstacleFactory(this.ecsWorld, this);
+        for(let loop=0;loop<10;loop++){
+            of.create();
+        }
 
         console.log("GameScene Created");
         phaserReactService.notifySceneReadyEvent(this.scene.key);
