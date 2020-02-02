@@ -52,7 +52,7 @@ class TargetPreview extends React.Component<Props, State> {
                         <span> Team {this.props.team} target:</span>
                         {this.props.modulegrid.grid.map((column, index) => {
                             return <div style={{display: "flex", justifyContent: "center"}}
-                                        key={"index"}>{column.map((item, index2) => {
+                                        key={index}>{column.map((item, index2) => {
                                 return <ModuleImg key={index + "_" + index2 + "_" + this.props.color} id={item}/>
                             })}</div>
                         })}

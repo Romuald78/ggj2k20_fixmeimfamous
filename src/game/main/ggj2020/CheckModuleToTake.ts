@@ -6,13 +6,14 @@ import {ModuleInfo} from "./ModuleInfo";
 import {InputComponent} from "../ecs/system/controls/InputComponent";
 import {Entity} from "../ecs/core/Entity";
 import {CheckModulesAgainstRecipes} from "./CheckModulesAgainstRecipes";
+import * as Matter from "matter-js";
 
-export class CheckToModuleToTake implements ScriptComponent{
+export class CheckToModuleToTake implements ScriptComponent {
 
 
-    private carriedModule:ModuleInfo;
+    private carriedModule: Entity;
 
-    constructor(private playerEnt:Entity, private moduleList:Entity[],private checkModulesAgainstRecipes:CheckModulesAgainstRecipes){
+    constructor(private playerEnt: Entity, private moduleList: Entity[], private checkModulesAgainstRecipes: CheckModulesAgainstRecipes) {
         this.carriedModule = null;
     }
 
@@ -30,51 +31,80 @@ export class CheckToModuleToTake implements ScriptComponent{
         let playerPhys = this.playerEnt.getFirstComponentByName<PhysicGenericComponent>(PhysicGenericComponent.name);
         // distanceMin in front of player
         let distanceMin = 63;
+        // CHeck if the input component has been pressed
+        let playerX = playerPhys.getX();
+        let playerY = playerPhys.getY();
+        let playerPositionOnGridX = Math.round(playerX / GameConstants.moduleWidthWU);
+        let playerPositionOnGridY = Math.round(playerY / GameConstants.moduleHeightWU);
+        let angp = playerPhys.getRotation();
+        let targetPositionX = playerX + distanceMin * Math.cos(angp);
+        let targetPositionY = playerY + distanceMin * Math.sin(angp);
 
         // We check if we have to leavr a module
-        if(this.carriedModule){
+        if (this.carriedModule) {
             if (playerIn.isOFF("TAKEMODULE")) {
-                //// TODO avoid putting a module on another one
-                this.carriedModule.leave();
-                this.carriedModule = null;
-                console.log("check ");
-                setTimeout(()=>{
-                    this.checkModulesAgainstRecipes.checkWin();
-                },100);
-            }
-        }
-        else {
-            // Loop into the list,
-            if (playerIn.isON("TAKEMODULE")) {
-                let moduleInfoMin = null;
-                this.moduleList.forEach((modEnt) => {
-                    if(!this.carriedModule) {
-                        // get module info
-                        let modInfo = modEnt.getFirstComponentByName<ModuleInfo>(ModuleInfo.name);
-                        if(!modInfo.getCarryMode()) {
-                            // Get module physics
-                            let modPhys = modEnt.getFirstComponentByName<PhysicGenericComponent>(PhysicGenericComponent.name);
-                            // CHeck if the input component has been pressed
-                            let xp   = playerPhys.getX();
-                            let yp   = playerPhys.getY();
-                            let angp = playerPhys.getRotation();
-                            xp += distanceMin*Math.cos(angp);
-                            yp += distanceMin*Math.sin(angp);
-                            let xm   = modPhys.getX();
-                            let ym   = modPhys.getY();
-                            xm = Math.round(xm/GameConstants.moduleWidthWU);
-                            ym = Math.round(ym/GameConstants.moduleHeightWU);
-                            xp = Math.round(xp/GameConstants.moduleWidthWU);
-                            yp = Math.round(yp/GameConstants.moduleHeightWU);
-                            if( (xm == xp) && (ym == yp) ){
-                                this.carriedModule = modInfo;
-                                this.carriedModule.take(playerPhys);
+                let module = this.getModuleAt(targetPositionX, targetPositionY);
+                if (!module) {
+                    //there is no module in front
+                    this.carriedModule.getFirstComponentByName<ModuleInfo>(ModuleInfo.name).leave();
+                    this.carriedModule = null;
+                } else {
+                    // find another spot
+                    dance:for (let i = -1; i < 2; i++) {
+                        for (let j = -1; j < 2; j++) {
+                            if (i == 0 && j == 0) {
+                                continue;
+                            }
+                            let newTargetPositionX = (playerPositionOnGridX + i) * GameConstants.moduleWidthWU;
+                            let newTargetPositionY = (playerPositionOnGridY + j) * GameConstants.moduleWidthWU;
+                            let module = this.getModuleAt(newTargetPositionX, newTargetPositionY);
+                            if (!module) {
+                                let body = this.carriedModule.getFirstComponentByName<PhysicGenericComponent>(PhysicGenericComponent.name).getBody();
+                                Matter.Body.setPosition(body,{x:newTargetPositionX,y:newTargetPositionY});
+                                //there is no module in front
+                                this.carriedModule.getFirstComponentByName<ModuleInfo>(ModuleInfo.name).leave();
+                                this.carriedModule = null;
+                                break dance;
                             }
                         }
                     }
-                });
+                }
+                setTimeout(() => {
+                    this.checkModulesAgainstRecipes.checkWin();
+                }, 100);
+            }
+        } else {
+            // Loop into the list,
+            if (playerIn.isON("TAKEMODULE")) {
+                let module = this.getModuleAt(targetPositionX, targetPositionY);
+                if (module) {
+                    this.carriedModule = module;
+                    this.carriedModule.getFirstComponentByName<ModuleInfo>(ModuleInfo.name).take(playerPhys);
+                }
             }
         }
+    }
+
+    getModuleAt(targetxwu, targetywu): Entity {
+        let targetxInGrid = Math.round(targetxwu / GameConstants.moduleWidthWU);
+        let targetyInGrid = Math.round(targetywu / GameConstants.moduleHeightWU);
+        let moduleInfoMin = null;
+        this.moduleList.forEach((modEnt) => {
+            // get module info
+            let modInfo = modEnt.getFirstComponentByName<ModuleInfo>(ModuleInfo.name);
+            if (!modInfo.getCarryMode()) {
+                // Get module physics
+                let modPhys = modEnt.getFirstComponentByName<PhysicGenericComponent>(PhysicGenericComponent.name);
+                let xm = modPhys.getX();
+                let ym = modPhys.getY();
+                xm = Math.round(xm / GameConstants.moduleWidthWU);
+                ym = Math.round(ym / GameConstants.moduleHeightWU);
+                if ((xm == targetxInGrid) && (ym == targetyInGrid)) {
+                    moduleInfoMin = modEnt;
+                }
+            }
+        });
+        return moduleInfoMin;
     }
 
 }
