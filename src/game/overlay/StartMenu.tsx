@@ -28,20 +28,20 @@ export class PlayerComponent extends React.Component<PlayerProps, {}> {
         const {classes} = this.props;
         return (
             <React.Fragment>
-                    <Paper
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            flexDirection: "column",
-                            height: "80%",
-                            margin: "10px",
-                            backgroundColor: this.getBgColor()
-                        }}
-                        color={"primary"}>
-                        <img draggable={false} alt={this.props.name} src={this.props.src}
-                             className={classes.bigAvatar}/>
-                        <Chip label={this.props.name} style={{margin: "5px"}}/>
-                    </Paper>
+                <Paper
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        height: "80%",
+                        margin: "10px",
+                        backgroundColor: this.getBgColor()
+                    }}
+                    color={"primary"}>
+                    <img draggable={false} alt={this.props.name} src={this.props.src}
+                         className={classes.bigAvatar}/>
+                    <Chip label={this.props.name} style={{margin: "5px"}}/>
+                </Paper>
             </React.Fragment>
         );
     }
@@ -65,42 +65,42 @@ export class StartMenu extends React.Component<{}, State> {
         let removeListener = phaserReactService.onSceneReady<MenuScene>(MENU_SCENE_KEY, (scene) => {
             this.setState({open: true});
             window.addEventListener("gamepadconnected", (e: any) => {
-                this.registerGamepad(e.gamepad.index,scene.inputComponent);
+                this.registerGamepad(e.gamepad.index, scene.inputComponent);
             });
             let pads = navigator.getGamepads();
-            if( pads ){
-                for(let p=0; p<pads.length; p++){
-                    if(pads[p]!==null) {
-                        this.registerGamepad(pads[p].index,scene.inputComponent);
+            if (pads) {
+                for (let p = 0; p < pads.length; p++) {
+                    if (pads[p] !== null) {
+                        this.registerGamepad(pads[p].index, scene.inputComponent);
                     }
                 }
             }
-            scene.inputComponent.register("pressA",{device_num:0,input_ref:" ",threshold:0,type:"key"});
-            scene.inputComponent.registerEvent("pressA",(actionName, buttonState) => {
-                if(!buttonState)
-                if(!this.addPlayer("Keyboard")){
-                    this.switchPlayer("Keyboard");
-                }
+            scene.inputComponent.register("pressA", {device_num: 0, input_ref: " ", threshold: 0, type: "key"});
+            scene.inputComponent.registerEvent("pressA", (actionName, buttonState) => {
+                if (!buttonState)
+                    if (!this.addPlayer("Keyboard")) {
+                        this.switchPlayer("Keyboard");
+                    }
             });
         });
 
 
     }
 
-    registerGamepad(id:number,input){
-        if(!this.registered.has(id)) {
+    registerGamepad(id: number, input) {
+        if (!this.registered.has(id)) {
             this.registered.add(id);
             input.register("pressA-" + id, {device_num: id, input_ref: "A", threshold: 0, type: "button"});
             input.registerEvent("pressA-" + id, (actionName, buttonState) => {
-                if(!buttonState)
-                if(!this.addPlayer("Gamepad-" + id)){
-                    this.switchPlayer("Gamepad-" + id);
-                }
+                if (!buttonState)
+                    if (!this.addPlayer("Gamepad-" + id)) {
+                        this.switchPlayer("Gamepad-" + id);
+                    }
             });
 
             input.register("start-" + id, {device_num: id, input_ref: "START", threshold: 0, type: "button"});
             input.registerEvent("start-" + id, (actionName, buttonState) => {
-                if(!buttonState)
+                if (!buttonState)
                     this.validate();
             });
         }
@@ -113,10 +113,10 @@ export class StartMenu extends React.Component<{}, State> {
     switchPlayer(name: string) {
         this.setState((state) => {
             let newState = {...state};
-            if(newState.players[name].team=="blue") {
-                newState.players[name].team ="red";
+            if (newState.players[name].team == "blue") {
+                newState.players[name].team = "red";
                 newState.players[name].src = "./assets/main_atlas/player_front/player_front_0.png";
-            }else{
+            } else {
                 newState.players[name].team = "blue";
                 newState.players[name].src = "./assets/main_atlas/player_front/player_front_blue_0.png";
             }
@@ -125,7 +125,7 @@ export class StartMenu extends React.Component<{}, State> {
     }
 
     addPlayer(name: string) {
-        if(!this.state.players[name]) {
+        if (!this.state.players[name]) {
             this.setState((state) => {
                 let newState = {...state};
                 let player: Player = {
@@ -137,13 +137,13 @@ export class StartMenu extends React.Component<{}, State> {
                 return newState;
             });
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     validate() {
-        if(this.allowValidate()) {
+        if (this.allowValidate()) {
             this.setState({open: false});
             let scene = phaserReactService.getScene<MenuScene>(MENU_SCENE_KEY);
             scene.goNext({playersStartData: this.state.players});
@@ -166,55 +166,71 @@ export class StartMenu extends React.Component<{}, State> {
                     backgroundColor: "#42FF32FF",
                     width: "100%",
                     height: "100%",
-                    overflow:"hidden",
+                    overflow: "hidden",
                     display: 'flex',
-                    flexWrap: 'wrap',
+                    flexDirection: "column",
                     justifyContent: 'space-around',
                 }}>
-                    <h1>FixMe I'm Famous</h1>
-                    <h1>Select Your team</h1>
-                    <Paper style={{backgroundColor: "#0000F28F", width: "100%", height: "30%",margin:"20px"}}>
-                    <div style={{
-                        display: "flex",
-                        height: "100%",
-                        justifyContent: "center",
-                        flexDirection: "row",}}>
-                        {Object.keys(this.state.players).map(key => {
-                                let player = this.state.players[key];
-                            return player.team!=="blue"?<div key={key} style={{width: "0", height: "0"}}></div>:
-                                    <PlayerComponent classes={{}} key={key} {...player} />
-                            }
-                        )}
+                    <div style={{flexBasis: "10%",
+                        display: 'flex',justifyContent:"center"}}>
+                        <h1>FixMe I'm Famous</h1>
                     </div>
-                    </Paper>
-                    <Paper style={{backgroundColor: "#F200008F", width: "100%", height: "30%",margin:"20px"}}>
-                        <div style={{
-                            display: "flex",
-                            height: "100%",
-                            justifyContent: "center",
-                            flexDirection: "row",}}>
-                            {Object.keys(this.state.players).map(key => {
-                                    let player = this.state.players[key];
-                                    return player.team!=="red"?<div key={key} style={{width: "0", height: "0"}}></div>:<PlayerComponent classes={{}} key={key} {...player} />
-                                }
-                            )}
-                        </div>
-                    </Paper>
 
-                    <Button disabled={this.diallowValidate()} style={{margin:"20px"}} variant="contained" color="primary" onClick={()=>{this.validate()}}>
-                        Start!
-                    </Button>
+                    <div style={{flexBasis: "80%"}}>
+                        <Paper style={{backgroundColor: "#0000F28F", width: "80%", height: "30%", margin: "20px"}}>
+                            <div style={{
+                                display: "flex",
+                                height: "100%",
+                                justifyContent: "center",
+                                flexDirection: "row",
+                            }}>
+                                {Object.keys(this.state.players).map(key => {
+                                        let player = this.state.players[key];
+                                        return player.team !== "blue" ?
+                                            <div key={key} style={{width: "0", height: "0"}}></div> :
+                                            <PlayerComponent classes={{}} key={key} {...player} />
+                                    }
+                                )}
+                            </div>
+                        </Paper>
+                        <Paper style={{backgroundColor: "#F200008F", width: "80%", height: "30%", margin: "20px"}}>
+                            <div style={{
+                                display: "flex",
+                                height: "100%",
+                                justifyContent: "center",
+                                flexDirection: "row",
+                            }}>
+                                {Object.keys(this.state.players).map(key => {
+                                        let player = this.state.players[key];
+                                        return player.team !== "red" ?
+                                            <div key={key} style={{width: "0", height: "0"}}></div> :
+                                            <PlayerComponent classes={{}} key={key} {...player} />
+                                    }
+                                )}
+                            </div>
+                        </Paper>
+                    </div>
+
+                    <div style={{flexBasis: "10%",display: 'flex',justifyContent:"center"}}>
+                        <Button disabled={this.diallowValidate()} style={{margin: "20px"}} variant="contained"
+                                color="primary" onClick={() => {
+                            this.validate()
+                        }}>
+                            Start!
+                        </Button>
+                    </div>
                 </div>
                 }
             </React.Fragment>
         );
     }
 
-    allowValidate():boolean{
-        return Object.keys(this.state.players).length>0;
+    allowValidate(): boolean {
+        return Object.keys(this.state.players).length > 0;
     }
 
-    diallowValidate():boolean{
-        return !this.allowValidate();;
+    diallowValidate(): boolean {
+        return !this.allowValidate();
+        ;
     }
 }
