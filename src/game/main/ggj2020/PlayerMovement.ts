@@ -37,20 +37,20 @@ export class PlayerMovement implements ScriptComponent {
             ang = (ang+360)%360;
             if(ang >= 45 && ang < 135){
                 // DOWN
-                this.player.play("WALKDOWN"+this.teamid);
+                this.player.play("WALKDOWN"+this.teamid,true);
             }
             else if(ang >= 135 && ang < 225){
                 // LEFT
-                this.player.play("WALKSIDE"+this.teamid);
+                this.player.play("WALKSIDE"+this.teamid,true);
                 this.player.setScale(this.defaultScaleX,this.defaultScaleY);
             }
             else if(ang >= 225 && ang < 315){
                 // UP
-                this.player.play("WALKUP"+this.teamid);
+                this.player.play("WALKUP"+this.teamid,true);
             }
             else{
                 // RIGHT
-                this.player.play("WALKSIDE"+this.teamid);
+                this.player.play("WALKSIDE"+this.teamid,true);
                 this.player.setScale(-this.defaultScaleX,this.defaultScaleY);
             }
             // check if we have to update the angle or not

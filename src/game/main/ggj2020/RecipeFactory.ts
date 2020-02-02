@@ -12,12 +12,12 @@ export class RecipeFactory {
 
     }
 
-    public create(teamId: number): Entity {
+    public create(teamId: number, nbX:number, nbY:number): Entity {
 
         let entity = this.world.createEntity();
 
         // Add new Module Grid
-        let mg = new ModuleGrid(teamId);
+        let mg = new ModuleGrid(teamId,nbX,nbY);
         entity.addComponent(mg);
 
         this.recipes.push(entity);

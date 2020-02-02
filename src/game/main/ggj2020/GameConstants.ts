@@ -23,3 +23,5 @@ export const BORDER_THICKNESS: number = 50;
 
 export const EVT_MODULE_DROPPED = "module_dropped";
 export const EVT_MODULE_CARRIED = "module_carried";
+
+export const ALEA_RECIPE = 0.75;

@@ -148,29 +148,49 @@ export class GameScene extends Scene {
         });
         Matter.World.add(physicWorld.world, borderBox);
 
-        // RECIPES
-        this.recipeFactory = new RecipeFactory(this.ecsWorld, this);
-        this.recipeFactory.create(1);
-        this.recipeFactory.create(2);
+
 
         let moduleFactory = new ModuleFactory(this.ecsWorld, this);
         let dw = GameConstants.MAP_W - 2 * GameConstants.moduleWidthWU;
         let dh = GameConstants.MAP_H - 2 * GameConstants.moduleHeightWU;
         let moduleList: Entity[] = [];
-        for (let i = 1; i <= 20; i++) {
-            let modEnt = moduleFactory.create((i % 5) + 1, Math.random() * dw + GameConstants.moduleWidthWU, Math.random() * dh + GameConstants.moduleHeightWU);
+
+        let nbPlayers = Object.keys(data.playersStartData).length;
+
+        let recipeW = Math.floor(Math.random()*4)+3;
+        let recipeH = Math.floor(Math.random()*3)+2;
+        let nbModsMini = recipeW*recipeH;
+
+        // CREATE MODULES according to number of players
+        let nbMods = nbModsMini*4;
+        for (let i = 1; i <= nbMods; i++) {
+            let modEnt = moduleFactory.create((i % 6) + 1, Math.random() * dw + GameConstants.moduleWidthWU, Math.random() * dh + GameConstants.moduleHeightWU);
             let modInfo: ModuleInfo = modEnt.getFirstComponentByName<ModuleInfo>("ModuleInfo");
             moduleList.push(modEnt);
         }
+
+
+
+
+
+        // CREATE RECIPES according to nb players
+        this.recipeFactory = new RecipeFactory(this.ecsWorld, this);
+        this.recipeFactory.create(1,recipeW, recipeH);
+        this.recipeFactory.create(2,recipeW, recipeH);
+
         let ruleFactory = new RuleFactory(this.ecsWorld, this,(windata)=>{
             this.displayWinScreen(windata);
         });
+
         let rules = ruleFactory.create(moduleList, this.recipeFactory.recipes);
+
+
 
         let playerFactory = new PlayerFactory(this.ecsWorld, this,rules.getFirstComponentByName<CheckModulesAgainstRecipes>(CheckModulesAgainstRecipes.name));
         let playerList: Entity[] = [];
         // create players at appropriate locations with approprirate controllers !
-        for (let i = 0; i < Object.keys(data.playersStartData).length; i++) {
+
+        for (let i = 0; i < nbPlayers; i++) {
             let key = Object.keys(data.playersStartData)[i];
             let player = data.playersStartData[key];
             let teamId = 0;//red
@@ -197,7 +217,6 @@ export class GameScene extends Scene {
             let phy: PhysicGenericComponent = ent.getFirstComponentByName("PhysicGenericComponent");
             playerList.push(ent);
         }
-
 
 
         let camFactory = new CameraFactory(this.ecsWorld, this);
