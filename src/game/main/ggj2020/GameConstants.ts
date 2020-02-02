@@ -5,7 +5,7 @@ export const playerWidthWU = 128;//cm
 export const playerHeightWU = 128;//cm
 export const playerHeightOF7 = -16;//cm
 
-export const ZOOM_MARGIN = 64;
+export const ZOOM_MARGIN = 256;
 
 export const obstacleWidthWU = 96;//cm
 export const obstacleHeightWU = 96;//cm

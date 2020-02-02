@@ -251,6 +251,17 @@ export class StartMenu extends React.Component<{}, State> {
                             Start!
                         </Button>
                     </div>
+
+                    <div style={{position:"absolute",bottom:"0",right:"0"}}>
+                        <b>CREDITS</b><br/>
+                        <ul>
+                        <li>CODE : Pierre-Henri FRICOT / Romuald GRIGNON / Aurélien NORMAND</li>
+                        <li>GFX : Pierre-Henri FRICOT / Romuald GRIGNON</li>
+                        <li>MUSIC : Hyperspace Jelly (https://hyperspacejelly.bandcamp.com)</li>
+                        <li>Global Game Jam 2020 - Jan. 31st / Feb. 2nd</li>
+                        </ul>
+                    </div>
+
                 </div>
                 }
             </React.Fragment>
