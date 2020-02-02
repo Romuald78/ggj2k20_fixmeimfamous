@@ -9,6 +9,7 @@ import { GfxFollowPhysics } from "../ecs/system/script/GfxFollowPhysics";
 import * as GameConstants from "./GameConstants";
 import { ModuleInfo } from "./ModuleInfo";
 import { SetGridPosition } from "./SetGridPosition";
+import {TintComponent} from "./TintComponent";
 
 
 export class ModuleFactory {
@@ -28,6 +29,7 @@ export class ModuleFactory {
         let gfxComp = new GfxGenericComponent<GameObjects.Image>(module, "gfx");
         entity.addComponent(gfxComp);
 
+        entity.addComponent(new TintComponent(gfxComp));
 
         // create animation object
         this.scene.anims.create({

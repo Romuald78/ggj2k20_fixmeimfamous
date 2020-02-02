@@ -1,5 +1,4 @@
 import {ScriptComponent} from "../ecs/system/script/ScriptComponent";
-import {Physic2D} from "../ecs/system/physics/Physic2D";
 import {PhysicGenericComponent} from "../ecs/system/physics/PhysicGenericComponent";
 import * as GameConstants from "./GameConstants";
 import {ModuleInfo} from "./ModuleInfo";
@@ -7,6 +6,8 @@ import {InputComponent} from "../ecs/system/controls/InputComponent";
 import {Entity} from "../ecs/core/Entity";
 import {CheckModulesAgainstRecipes} from "./CheckModulesAgainstRecipes";
 import * as Matter from "matter-js";
+import {PlayerMovement} from "./PlayerMovement";
+import {TintComponent} from "./TintComponent";
 
 export class CheckToModuleToTake implements ScriptComponent {
 
@@ -39,13 +40,18 @@ export class CheckToModuleToTake implements ScriptComponent {
         let angp = playerPhys.getRotation();
         let targetPositionX = playerX + distanceMin * Math.cos(angp);
         let targetPositionY = playerY + distanceMin * Math.sin(angp);
+        let team = this.playerEnt.getFirstComponentByName<PlayerMovement>(PlayerMovement.name).teamid;
 
         // We check if we have to leavr a module
         if (this.carriedModule) {
+            let tint = this.carriedModule.getFirstComponentByName<TintComponent>(TintComponent.name);
             if (playerIn.isOFF("TAKEMODULE")) {
                 let module = this.getModuleAt(targetPositionX, targetPositionY);
                 if (!module) {
                     //there is no module in front
+                    if(tint.team==="neutral" || tint.team===(team===0?"red":"blue")) {
+                        tint.setColorTeam(team === 0 ? "red" : "blue");
+                    }
                     this.carriedModule.getFirstComponentByName<ModuleInfo>(ModuleInfo.name).leave();
                     this.carriedModule = null;
                 } else {
@@ -78,8 +84,14 @@ export class CheckToModuleToTake implements ScriptComponent {
             if (playerIn.isON("TAKEMODULE")) {
                 let module = this.getModuleAt(targetPositionX, targetPositionY);
                 if (module) {
-                    this.carriedModule = module;
-                    this.carriedModule.getFirstComponentByName<ModuleInfo>(ModuleInfo.name).take(playerPhys);
+                    let tint = module.getFirstComponentByName<TintComponent>(TintComponent.name);
+                    if(tint.team==="neutral" || tint.team===(team===0?"red":"blue")) {
+                        tint.setColorTeam(team === 0 ? "red" : "blue");
+                            this.carriedModule = module;
+                            this.carriedModule.getFirstComponentByName<ModuleInfo>(ModuleInfo.name).take(playerPhys);
+                    }else{
+                        tint.decreaseToNeutral();
+                    }
                 }
             }
         }
