@@ -16,7 +16,7 @@ export class ModuleGrid implements Component {
             recipe[i]=[];
             for (let j=0;j<this.size;j++){
                 recipe[i].push(0);
-                let module = Math.random()>0.40;
+                let module = Math.random()>0.10;
                 if(module){
                     recipe[i][j] = Math.max(1,Math.ceil(Math.random()*this.maxModule));
                 }else{
@@ -24,6 +24,8 @@ export class ModuleGrid implements Component {
                 }
             }
         }
+        //
+        recipe[0][0] = Math.max(1,Math.ceil(Math.random()*this.maxModule));
         return recipe;
     }
 
