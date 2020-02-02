@@ -15,23 +15,23 @@ import {ModuleGrid} from "../main/ggj2020/ModuleGrid";
 interface State {
     loseDialogOpen: boolean,
     winDialogOpen: boolean,
-    windata:any,
+    windata: any,
 }
 
 class WinLoseDialog extends React.Component<{}, State> {
     state: State = {
         loseDialogOpen: false,
         winDialogOpen: false,
-        windata:{},
+        windata: {},
     };
 
     componentDidMount() {
-        let removeListener = phaserReactService.onSceneReady<GameScene>(GAME_SCENE_KEY,(scene)=>{
-            scene.registerOnWinCallback((windata)=>{
-                this.setState({winDialogOpen:true,windata:windata});
+        let removeListener = phaserReactService.onSceneReady<GameScene>(GAME_SCENE_KEY, (scene) => {
+            scene.registerOnWinCallback((windata) => {
+                this.setState({winDialogOpen: true, windata: windata});
             });
-            scene.registerOnLoseCallback(()=>{
-                this.setState({loseDialogOpen:true});
+            scene.registerOnLoseCallback(() => {
+                this.setState({loseDialogOpen: true});
             });
             removeListener();
         });
@@ -49,7 +49,8 @@ class WinLoseDialog extends React.Component<{}, State> {
         return (<React.Fragment>
                 <Dialog
                     open={this.state.loseDialogOpen}
-                    onClose={()=>{}}
+                    onClose={() => {
+                    }}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
@@ -62,7 +63,8 @@ class WinLoseDialog extends React.Component<{}, State> {
                         }}
                              src="./assets/game/ui/lose-image.png"
                              alt=""/>
-                        <DialogContentText id="alert-dialog-description" style={{textAlign:"center",color:"red",fontSize:"2.5em"}}>
+                        <DialogContentText id="alert-dialog-description"
+                                           style={{textAlign: "center", color: "red", fontSize: "2.5em"}}>
                             You Lose
                         </DialogContentText>
                     </DialogContent>
@@ -73,7 +75,7 @@ class WinLoseDialog extends React.Component<{}, State> {
                             Main Menu
                         </Button>
                         <Button variant={"contained"} onClick={() => {
-                            this.setState({loseDialogOpen:false});
+                            this.setState({loseDialogOpen: false});
                             let scene = phaserReactService.getScene<GameScene>(GAME_SCENE_KEY);
                             scene.restartLevel();
                         }} color="primary" autoFocus>
@@ -84,24 +86,30 @@ class WinLoseDialog extends React.Component<{}, State> {
 
                 <Dialog
                     open={this.state.winDialogOpen}
-                    onClose={()=>{}}
+                    onClose={() => {
+                    }}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogContent style={{backgroundColor:this.state.windata.team===0?"#00009FFF":"#9F0000FF"}}>
-                        <PlayerComponent classes={{}} key={""} name={this.state.windata.team===0?"Blue":"Red"} src={this.state.windata.team===0?
-                            "./assets/main_atlas/player_front/player_front_blue_0.png":
-                            "./assets/main_atlas/player_front/player_front_0.png"
-                        } team={this.state.windata.team===0?"blue":"red"}></PlayerComponent>
-                        {this.state.windata.receipe &&
-                        <TargetPreview color={this.state.windata.team !== 0 ? "#00009FFF" : "#9F0000FF"}
-                                       team={this.state.windata.team !== 0 ? "blue" : "red"}
+                    <DialogContent style={{backgroundColor: this.state.windata.team === 0 ? "#00009FFF" : "#9F0000FF"}}>
+                        <PlayerComponent classes={{}} key={""} name={this.state.windata.team === 0 ? "Blue" : "Red"}
+                                         src={this.state.windata.team === 0 ?
+                                             "./assets/main_atlas/player_front/player_front_blue_0.png" :
+                                             "./assets/main_atlas/player_front/player_front_0.png"
+                                         } team={this.state.windata.team === 0 ? "blue" : "red"}></PlayerComponent>
+                        {/*this.state.windata.receipe &&
+                            <div>
+                        <TargetPreview color={this.state.windata.team === 0 ? "#00009FFF" : "#9F0000FF"}
+                                       team={this.state.windata.team === 0 ? "blue" : "red"}
                                        modulegrid={((this.state.windata.receipe) as Entity).getFirstComponentByName<ModuleGrid>(ModuleGrid.name)}/>
-                        }
+                            </div>
+                        */}
 
-                        <DialogContentText id="alert-dialog-description"  style={{backgroundColor:this.state.windata.team===0?"#00009FFF":"#9F0000FF",
-                            textAlign:"center",color:"white",fontSize:"2.5em"}}>
-                            {(this.state.windata.team===0?"Blue":"Red")+" Win!"}
+                        <DialogContentText id="alert-dialog-description" style={{
+                            backgroundColor: this.state.windata.team === 0 ? "#00009FFF" : "#9F0000FF",
+                            textAlign: "center", color: "white", fontSize: "2.5em"
+                        }}>
+                            {(this.state.windata.team === 0 ? "Blue" : "Red") + " Win!"}
                         </DialogContentText>
                         <Button variant={"contained"} onClick={() => {
                             this.goBack()
