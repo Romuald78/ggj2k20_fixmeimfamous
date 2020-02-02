@@ -36,7 +36,7 @@ class TargetsPreview extends React.Component<{}, State> {
                     return <TargetPreview
                         key={""+index} modulegrid={module}
                                           team={index===0?"blue":"red"}
-                                          color={index===0?"#0000FF60":"#FF000060"}/>
+                                          color={index===0?"#0000FFA0":"#FF0000A0"}/>
                 })}
             </React.Fragment>
         );

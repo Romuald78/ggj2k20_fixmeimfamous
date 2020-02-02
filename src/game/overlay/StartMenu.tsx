@@ -33,12 +33,13 @@ export class PlayerComponent extends React.Component<PlayerProps, {}> {
                         display: "flex",
                         justifyContent: "center",
                         flexDirection: "column",
-                        height: "80%",
                         margin: "10px",
                         backgroundColor: this.getBgColor()
                     }}
                     color={"primary"}>
-                    <img draggable={false} alt={this.props.name} src={this.props.src}
+                    <img style={{
+                        width:"100%",
+                        height: "auto"}} draggable={false} alt={this.props.name} src={this.props.src}
                          className={classes.bigAvatar}/>
                     <Chip label={this.props.name} style={{margin: "5px"}}/>
                 </Paper>
@@ -172,15 +173,24 @@ export class StartMenu extends React.Component<{}, State> {
                     justifyContent: 'space-around',
                 }}>
                     <div style={{flexBasis: "10%",
-                        display: 'flex',justifyContent:"center"}}>
-                        <h1>FixMe I'm Famous</h1>
+                        display: 'flex',justifyContent:"center",}}>
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            flexDirection: "column",
+                        }}>
+                            <img style={{
+                                width:"100%",
+                                height: "auto"}} draggable={false} alt={"f"} src={"./assets/main_atlas/misc/title.png"}/>
+                        </div>
                     </div>
 
-                    <div style={{flexBasis: "80%"}}>
-                        <Paper style={{backgroundColor: "#0000F28F", width: "80%", height: "30%", margin: "20px"}}>
+                    <div style={{flexBasis: "80%",display: 'flex',justifyContent:"space-around",width:"100%"}}>
+                        <Paper style={{backgroundColor: "#0000F28F", margin: "20px"}}>
                             <div style={{
                                 display: "flex",
-                                height: "100%",
+                                alignItems:"center",
+                                height:"100%",
                                 justifyContent: "center",
                                 flexDirection: "row",
                             }}>
@@ -191,13 +201,20 @@ export class StartMenu extends React.Component<{}, State> {
                                             <PlayerComponent classes={{}} key={key} {...player} />
                                     }
                                 )}
+                                {Object.keys(this.state.players).length===0 &&
+                                <Button disabled={this.diallowValidate()} style={{margin: "20px"}} variant="contained"
+                                        color="primary" >
+                                    Press any key to start!
+                                </Button>
+                                }
                             </div>
                         </Paper>
-                        <Paper style={{backgroundColor: "#F200008F", width: "80%", height: "30%", margin: "20px"}}>
+                        <Paper style={{backgroundColor: "#F200008F", margin: "20px"}}>
                             <div style={{
                                 display: "flex",
-                                height: "100%",
+                                height:"100%",
                                 justifyContent: "center",
+                                alignItems:"center",
                                 flexDirection: "row",
                             }}>
                                 {Object.keys(this.state.players).map(key => {
@@ -207,8 +224,23 @@ export class StartMenu extends React.Component<{}, State> {
                                             <PlayerComponent classes={{}} key={key} {...player} />
                                     }
                                 )}
+                                {Object.keys(this.state.players).length===0 &&
+                                <Button disabled={this.diallowValidate()} style={{margin: "20px"}} variant="contained"
+                                        color="primary" >
+                                    Press any key to start!
+                                </Button>
+                                }
                             </div>
                         </Paper>
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            flexDirection: "column",
+                        }}>
+                        <img style={{
+                            width:"100%",
+                            height: "auto"}} draggable={false} alt={"f"} src={"./assets/main_atlas/misc/controller.png"}/>
+                        </div>
                     </div>
 
                     <div style={{flexBasis: "10%",display: 'flex',justifyContent:"center"}}>

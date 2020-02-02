@@ -48,8 +48,8 @@ class TargetPreview extends React.Component<Props, State> {
                     bottom: this.props.team === "blue" ? undefined : "0",
                     right: this.props.team === "blue" ? undefined : "0"
                 }}>
-                    <Paper style={{backgroundColor: this.props.color, margin: "20px"}}>
-                        <span> Team {this.props.team} target:</span>
+                    <Paper style={{backgroundColor: this.props.color, margin: "20px",padding:"5px"}}>
+                        <b style={{color:"white",padding:"2px"}}>How to fix:</b>
                         {this.props.modulegrid.grid.map((column, index) => {
                             return <div style={{display: "flex", justifyContent: "center"}}
                                         key={index}>{column.map((item, index2) => {

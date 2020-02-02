@@ -8,9 +8,6 @@ import DialogContentText from "@material-ui/core/DialogContentText/DialogContent
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
 import {PlayerComponent} from "./StartMenu";
-import TargetPreview from "./TargetPreview";
-import {Entity} from "../main/ecs/core/Entity";
-import {ModuleGrid} from "../main/ggj2020/ModuleGrid";
 
 interface State {
     loseDialogOpen: boolean,
@@ -91,7 +88,7 @@ class WinLoseDialog extends React.Component<{}, State> {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
-                    <DialogContent style={{backgroundColor: this.state.windata.team === 0 ? "#00009FFF" : "#9F0000FF"}}>
+                    <DialogContent style={{overflow:"hidden",backgroundColor: this.state.windata.team === 0 ? "#00009FFF" : "#9F0000FF"}}>
                         <PlayerComponent classes={{}} key={""} name={this.state.windata.team === 0 ? "Blue" : "Red"}
                                          src={this.state.windata.team === 0 ?
                                              "./assets/main_atlas/player_front/player_front_blue_0.png" :
