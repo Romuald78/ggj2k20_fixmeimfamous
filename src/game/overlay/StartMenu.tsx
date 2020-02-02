@@ -28,24 +28,20 @@ export class PlayerComponent extends React.Component<PlayerProps, {}> {
         const {classes} = this.props;
         return (
             <React.Fragment>
-                <div>
                     <Paper
                         style={{
                             display: "flex",
                             justifyContent: "center",
                             flexDirection: "column",
+                            height: "80%",
                             margin: "10px",
                             backgroundColor: this.getBgColor()
                         }}
                         color={"primary"}>
                         <img draggable={false} alt={this.props.name} src={this.props.src}
-                             style={{
-                                 height:"80px",
-                             }}
                              className={classes.bigAvatar}/>
                         <Chip label={this.props.name} style={{margin: "5px"}}/>
                     </Paper>
-                </div>
             </React.Fragment>
         );
     }
@@ -178,9 +174,9 @@ export class StartMenu extends React.Component<{}, State> {
                     <h1>FixMe I'm Famous</h1>
                     <h1>Select Your team</h1>
                     <Paper style={{backgroundColor: "#0000F28F", width: "100%", height: "30%",margin:"20px"}}>
-                    <span style={{paddingTop:"5px",paddingLeft:"5px"}}>Team Blue</span>
                     <div style={{
                         display: "flex",
+                        height: "100%",
                         justifyContent: "center",
                         flexDirection: "row",}}>
                         {Object.keys(this.state.players).map(key => {
@@ -192,9 +188,9 @@ export class StartMenu extends React.Component<{}, State> {
                     </div>
                     </Paper>
                     <Paper style={{backgroundColor: "#F200008F", width: "100%", height: "30%",margin:"20px"}}>
-                        <span style={{paddingTop:"5px",paddingLeft:"5px"}}>Team Red</span>
                         <div style={{
                             display: "flex",
+                            height: "100%",
                             justifyContent: "center",
                             flexDirection: "row",}}>
                             {Object.keys(this.state.players).map(key => {

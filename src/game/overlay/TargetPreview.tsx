@@ -20,11 +20,11 @@ class ModuleImg extends React.Component<{ id: number }, {}> {
         return (
             <React.Fragment>
                 {this.props.id !== 0 &&
-                <img style={{width: "32px", height: "32px"}} draggable={false} alt={this.mapIdToImage(this.props.id)}
+                <img style={{width: "3vw", height: "3vw"}} draggable={false} alt={this.mapIdToImage(this.props.id)}
                      src={this.mapIdToImage(this.props.id)}/>
                 }
                 {this.props.id === 0 &&
-                <div style={{width: "32px", height: "32px"}}/>
+                <div style={{width: "3vw", height: "3vw"}}/>
                 }
             </React.Fragment>
         );
