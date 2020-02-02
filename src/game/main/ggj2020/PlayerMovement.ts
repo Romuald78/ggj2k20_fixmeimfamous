@@ -15,7 +15,7 @@ export class PlayerMovement implements ScriptComponent {
     private defaultScaleY;
 
 
-    constructor(private playerBody: Matter.Body, private player: Phaser.GameObjects.Sprite, private playerInput: InputComponent,private teamid:number) {
+    constructor(private playerBody: Matter.Body, private player: Phaser.GameObjects.Sprite, private playerInput: InputComponent,public teamid:number) {
         this.defaultScaleX = player.scaleX;
         this.defaultScaleY = player.scaleY;
     }
