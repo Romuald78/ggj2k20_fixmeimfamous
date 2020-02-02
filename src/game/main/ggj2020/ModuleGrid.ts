@@ -10,11 +10,29 @@ export class ModuleGrid implements Component {
         return ModuleGrid.name;
     }
 
-    constructor(private configID) {
+    mkRecipe(){
+        let recipe: number[][]=[];
+        for (let i=0;i<this.size-1;i++){
+            recipe[i]=[];
+            for (let j=0;j<this.size;j++){
+                recipe[i].push(0);
+                let module = Math.random()>0.40;
+                if(module){
+                    recipe[i][j] = Math.max(1,Math.ceil(Math.random()*this.maxModule));
+                }else{
+                    recipe[i][j] = 0;
+                }
+            }
+        }
+        return recipe;
+    }
+
+    constructor(private configID,private size:number = 3,private maxModule = 5) {
         let configs = [
-            [[1, 3, 0], [0, 2, 4]],
-            [[0, 3, 1], [4, 2, 2]],
+            this.mkRecipe(),
+            this.mkRecipe(),
         ];
+
         // Keep only value in the
         this.configID = this.configID % configs.length;
         this.grid = configs[this.configID];
