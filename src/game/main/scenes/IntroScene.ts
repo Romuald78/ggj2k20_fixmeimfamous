@@ -17,7 +17,7 @@ export class IntroScene extends Scene {
         super({
             key: INTRO_SCENE_KEY
         });
-        this.SPEED = 3333;
+        this.SPEED = 5000;
         this.goToNextScene = 0;
         // KEY DOWN LISTENER : if someone press a key, go to the next scene
         window.document.addEventListener('keyup', (evt)=>{
