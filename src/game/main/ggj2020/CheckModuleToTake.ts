@@ -45,7 +45,7 @@ export class CheckToModuleToTake implements ScriptComponent {
         // We check if we have to leavr a module
         if (this.carriedModule) {
             let tint = this.carriedModule.getFirstComponentByName<TintComponent>(TintComponent.name);
-            if (playerIn.isOFF("TAKEMODULE")) {
+            if (playerIn.isOFF("TAKEMODULE") && playerIn.isOFF("TAKEMODULE2")) {
                 let module = this.getModuleAt(targetPositionX, targetPositionY);
                 if (!module) {
                     //there is no module in front
@@ -81,7 +81,7 @@ export class CheckToModuleToTake implements ScriptComponent {
             }
         } else {
             // Loop into the list,
-            if (playerIn.isON("TAKEMODULE")) {
+            if (playerIn.isON("TAKEMODULE") || playerIn.isON("TAKEMODULE2")) {
                 let module = this.getModuleAt(targetPositionX, targetPositionY);
                 if (module) {
                     let tint = module.getFirstComponentByName<TintComponent>(TintComponent.name);

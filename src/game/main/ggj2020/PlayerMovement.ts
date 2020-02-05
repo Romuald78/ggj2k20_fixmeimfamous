@@ -28,11 +28,15 @@ export class PlayerMovement implements ScriptComponent {
         //Matter.Body.setAngularVelocity(this.playerBody, 0);
         let dx = -this.playerInput.getAnalogValue("WALK_LEFT") + this.playerInput.getAnalogValue("WALK_RIGHT");
         let dy = -this.playerInput.getAnalogValue("WALK_UP") + this.playerInput.getAnalogValue("WALK_DOWN");
-        let realAng = Math.atan2(dy,dx);
-        if(    this.playerInput.isON("WALK_LEFT")
-            || this.playerInput.isON("WALK_RIGHT")
-            || this.playerInput.isON("WALK_UP")
-            || this.playerInput.isON("WALK_DOWN") ){
+
+        let dx2 = -this.playerInput.getAnalogValue("TURN_LEFT") + this.playerInput.getAnalogValue("TURN_RIGHT");
+        let dy2 = -this.playerInput.getAnalogValue("TURN_UP") + this.playerInput.getAnalogValue("TURN_DOWN");
+
+        let realAng = Math.atan2(dy2,dx2);
+        if(    this.playerInput.isON("TURN_LEFT")
+            || this.playerInput.isON("TURN_RIGHT")
+            || this.playerInput.isON("TURN_UP")
+            || this.playerInput.isON("TURN_DOWN") ){
             let ang = realAng*180/Math.PI;
             ang = (ang+360)%360;
             if(ang >= 45 && ang < 135){
@@ -56,8 +60,6 @@ export class PlayerMovement implements ScriptComponent {
             // check if we have to update the angle or not
             Matter.Body.setAngle(this.playerBody, realAng);
         }
-
-
 
         // Set Z depth according to Y level
         this.player.setDepth(Math.round(this.player.y*1000));
