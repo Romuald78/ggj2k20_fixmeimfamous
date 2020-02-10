@@ -21,11 +21,18 @@ export class SetGridPosition implements ScriptComponent{
         return SetGridPosition.name;
     }
 
+    public static getAlignedPosition(x:number, y:number){
+        let x2 = Math.round(x / GameConstants.moduleWidthWU) * GameConstants.moduleWidthWU;
+        let y2 = Math.round(y / GameConstants.moduleHeightWU) * GameConstants.moduleHeightWU;
+        return [x2,y2];
+    }
+
     private align(){
         let x = this.phyModule.getBody().position.x;
         let y = this.phyModule.getBody().position.y;
-        let x2 = Math.round(x / GameConstants.moduleWidthWU) * GameConstants.moduleWidthWU;
-        let y2 = Math.round(y / GameConstants.moduleHeightWU) * GameConstants.moduleHeightWU;
+        let newCoords = SetGridPosition.getAlignedPosition(x,y);
+        let x2 = newCoords[0];
+        let y2 = newCoords[1];
 
         if (x2 != x || y2 != y) {
             Matter.Body.setPosition(this.phyModule.getBody(), {x: x2, y: y2});
@@ -41,17 +48,20 @@ export class SetGridPosition implements ScriptComponent{
             }
             let x = phyCarrier.getFrontX(64);
             let y = phyCarrier.getFrontY(64);
-            this.phyModule.setPosition(x,y);
+            let alignedXY = SetGridPosition.getAlignedPosition(x,y);
+            this.phyModule.setPosition(alignedXY[0],alignedXY[1]);
         }
         else{
-            if( this.previousCarryMode == true ) {
 
+            if( this.previousCarryMode == true ) {
                 // align module
                 this.align();
                 // enable physics back
                 this.phyModule.enable();
             }
         }
+
+
 
         // update for next cycle
         this.previousCarryMode = this.modInfo.getCarryMode();

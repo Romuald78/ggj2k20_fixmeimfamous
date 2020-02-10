@@ -7,8 +7,10 @@ export class TintComponent implements Component{
 
     }
 
+    private TIME:number = 2;
+
     public team: string = "neutral";
-    tintValue
+    private tintValue:number = 0;
 
     getName(): string {
         return TintComponent.name;
@@ -16,13 +18,13 @@ export class TintComponent implements Component{
 
     setColorTeam(team:string){
         this.team = team;
-        this.tintValue=255;
+        this.tintValue=255*this.TIME;
         this.setTintInternal();
     }
 
     private setTintInternal(){
         if(this.team!=="neutral") {
-            let v = 255 - this.tintValue;
+            let v = 255 - (this.tintValue/this.TIME);
             this.gfxComp.getGfxObj().setTint(
                 this.team === "blue" ?
                 Math.floor((v<<16)+(v<<8)+255) :

@@ -2,33 +2,33 @@
 /*
 
 ------------------------------------
-XBOX / NAMES / MayFlash GameCube
+XBOX / NAMES / GameCube / SUPER NES
 ------------------------------------
-0   -   A       -   1
-1   -   B       -   2
-2   -   X       -   0
-3   -   Y       -   3
-4   -   LB      -   /?\
-5   -   RB      -   7
-6   -   LT      -   4
-7   -   RT      -   5
-8   -   BACK    -   /?\
-9   -   START   -   9
-10  -   LSTICK  -   /?\
-11  -   RSTICK  -   /?\
-12  -   CROSSU  -   12
-13  -   CROSSD  -   14
-14  -   CROSSL  -   15
-15  -   CROSSR  -   13
+0   -   A       -   1       -   1
+1   -   B       -   2       -   2
+2   -   X       -   0       -   0
+3   -   Y       -   3       -   3
+4   -   LB      -   .       -   4
+5   -   RB      -   7       -   5
+6   -   LT      -   4       -   .
+7   -   RT      -   5       -   .
+8   -   BACK    -   .       -   8
+9   -   START   -   9       -   9
+10  -   LSTICK  -   .       -   .
+11  -   RSTICK  -   .       -   .
+12  -   CROSSU  -   12      -   .
+13  -   CROSSD  -   14      -   .
+14  -   CROSSL  -   15      -   .
+15  -   CROSSR  -   13      -   .
 ------------------------------------
-XBOX / NAMES / MayFlash GameCube
+XBOX / NAMES / GameCube / SUPER NES
 ------------------------------------
-0   -   LEFTH   -   0
-1   -   LEFTV   -   1
-2   -   RIGHTH  -   5
-3   -   RIGHTV  -   2
-4   -   ?       -   9 ?
-5   -   ?       -   9 ?
+0   -   LEFTH   -   0       -   0
+1   -   LEFTV   -   1       -   1
+2   -   RIGHTH  -   5       -   .
+3   -   RIGHTV  -   2       -   .
+4   -   ?       -   9?      -   .
+5   -   ?       -   9?      -   .
 
 
  */
@@ -106,6 +106,10 @@ export class InputComponent implements Component {
     private readonly buttonsMayFlashGC:number[] = [1,2,0,3,-1,7,4,5,-1,9,-1,-1,12,14,15,13];
     private readonly axisMayFlashGC:number[] = [0,1,5,2];
 
+    private readonly buttonsSuperNes:number[] = [1,2,0,3,4,5,-1,-1,8,9,-1,-1,-1,-1,-1,-1];
+    private readonly axisSuperNes:number[] = [0,1,-1,-1];
+
+
 
     //-------------------------------------------------------------------------------------
     // FUNCTIONS FOR IDs TRANSLATION
@@ -123,6 +127,13 @@ export class InputComponent implements Component {
                 // Translate button number
                 result = this.axisMayFlashGC[axiNum];
             }
+            //-----------------------------
+            // -----  USB SUPER NES   -----
+            //-----------------------------
+            if( name.includes('0810-e501-usb') ){
+                // Translate button number
+                result = this.axisSuperNes[axiNum];
+            }
         }
         return result;
     }
@@ -139,6 +150,13 @@ export class InputComponent implements Component {
                 // Translate button number
                 result = this.buttonsMayFlashGC[butNum];
             }
+            //-----------------------------
+            // -----  USB SUPER NES   -----
+            //-----------------------------
+            if( name.includes('0810-e501-usb') ){
+                // Translate button number
+                result = this.buttonsSuperNes[butNum];
+            }
         }
         return result;
     }
@@ -149,6 +167,7 @@ export class InputComponent implements Component {
     //-------------------------------------------------------------------------------------
     // Check if the action callbacks are linked to any gamepad buttons
     updateScript(delta: number) {
+
         // Update button states (each of them)
         Object.keys(this.butState).forEach( (k) =>{
             let dN = this.butState[k].devNum;
@@ -277,7 +296,12 @@ export class InputComponent implements Component {
             let dN = this.buttonList[actionName].device_num;
             let bN = this.translateButtonIDs(dN,this.buttonList[actionName].input_ref);
             if( this.butState[dN+"_"+bN] ){
-                throw new Error("button state is already registered ("+dN+" / "+bN+"/)");
+                if(bN != -1){
+                    throw new Error("button state is already registered ("+dN+" / "+bN+"/)");
+                }
+                else{
+                    return;
+                }
             }
             this.butState[dN+"_"+bN] = {devNum:dN, butNum:bN, state:false};
         }
@@ -295,7 +319,12 @@ export class InputComponent implements Component {
             let dN = this.gamePadAxisList[actionName].device_num;
             let bN = this.translateAxisIDs(dN,this.gamePadAxisList[actionName].input_ref);
             if( this.axisState[dN+"_"+bN+"_"+inputObject.threshold] ){
-                throw new Error("gamePadAxisList state is already registered ("+dN+" / "+bN+"/)");
+                if(bN != -1){
+                    throw new Error("gamePadAxisList state is already registered ("+dN+" / "+bN+"/)");
+                }
+                else{
+                    return;
+                }
             }
             this.axisState[dN+"_"+bN+"_"+inputObject.threshold] = {devNum:dN, butNum:bN, state:false,input:inputObject};
         }
@@ -439,6 +468,5 @@ export class InputComponent implements Component {
         // return the computation between all keys, buttons and axis
         return result;
     }
-
 
 }

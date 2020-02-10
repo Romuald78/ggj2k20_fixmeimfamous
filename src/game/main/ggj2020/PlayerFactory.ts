@@ -72,10 +72,15 @@ export class PlayerFactory {
             repeat: -1
         });
 
-
         // Play animation IDLE
-        player.anims.play('WALKUP'+teamId, true);
+        player.anims.play('WALKDOWN'+teamId, true);
 
+
+        // Create sprite for highlight selection
+        let highlight   = this.scene.add.circle(0,0,30,0x00FF00);
+        highlight.setFillStyle(teamId!==0 ? 0x000080 : 0x800000);
+        let gfxComp2 = new GfxGenericComponent<GameObjects.Arc>(highlight, "highlight");
+        entity.addComponent(gfxComp2);
 
         ////
         //Body creation
@@ -134,7 +139,6 @@ export class PlayerFactory {
 
         let playerMov = entity.addComponent(new PlayerMovement(physicBodyComponent.getBody(), player, playerInput,teamId));
         entity.addComponent(playerMov);
-
 
         let gfxfollow = entity.addComponent(new GfxFollowPhysics(gfxComp, physicBodyComponent,0, GameConstants.playerHeightOF7));
         entity.addComponent(gfxfollow);

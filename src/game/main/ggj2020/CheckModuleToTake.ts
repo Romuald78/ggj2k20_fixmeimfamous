@@ -8,6 +8,9 @@ import {CheckModulesAgainstRecipes} from "./CheckModulesAgainstRecipes";
 import * as Matter from "matter-js";
 import {PlayerMovement} from "./PlayerMovement";
 import {TintComponent} from "./TintComponent";
+import {GfxGenericComponent} from "../ecs/system/gfx/GfxGenericComponent";
+import {GameObjects} from "phaser";
+import {SetGridPosition} from "./SetGridPosition";
 
 export class CheckToModuleToTake implements ScriptComponent {
 
@@ -42,7 +45,13 @@ export class CheckToModuleToTake implements ScriptComponent {
         let targetPositionY = playerY + distanceMin * Math.sin(angp);
         let team = this.playerEnt.getFirstComponentByName<PlayerMovement>(PlayerMovement.name).teamid;
 
-        // We check if we have to leavr a module
+        // High light possible selection
+        let highlight = this.playerEnt.getFirstComponentByName<GfxGenericComponent<GameObjects.Arc>>("highlight");
+        let alignedTarget = SetGridPosition.getAlignedPosition(targetPositionX,targetPositionY);
+        highlight.setPosition(alignedTarget[0],alignedTarget[1]);
+        highlight.getGfxObj().alpha = 0.0;
+
+        // We check if we have to leave a module
         if (this.carriedModule) {
             let tint = this.carriedModule.getFirstComponentByName<TintComponent>(TintComponent.name);
             if (playerIn.isOFF("TAKEMODULE") && playerIn.isOFF("TAKEMODULE2")) {
@@ -81,10 +90,11 @@ export class CheckToModuleToTake implements ScriptComponent {
             }
         } else {
             // Loop into the list,
-            if (playerIn.isON("TAKEMODULE") || playerIn.isON("TAKEMODULE2")) {
-                let module = this.getModuleAt(targetPositionX, targetPositionY);
-                if (module) {
-                    let tint = module.getFirstComponentByName<TintComponent>(TintComponent.name);
+            let module = this.getModuleAt(targetPositionX, targetPositionY);
+            if (module) {
+                highlight.getGfxObj().alpha = 0.75;
+                let tint = module.getFirstComponentByName<TintComponent>(TintComponent.name);
+                if (playerIn.isON("TAKEMODULE") || playerIn.isON("TAKEMODULE2")) {
                     if(tint.team==="neutral" || tint.team===(team===0?"red":"blue")) {
                         tint.setColorTeam(team === 0 ? "red" : "blue");
                             this.carriedModule = module;
