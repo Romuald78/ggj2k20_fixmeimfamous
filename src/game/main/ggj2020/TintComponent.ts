@@ -7,7 +7,7 @@ export class TintComponent implements Component{
 
     }
 
-    private TIME:number = 2;
+    private TIME:number = 3;
 
     public team: string = "neutral";
     private tintValue:number = 0;

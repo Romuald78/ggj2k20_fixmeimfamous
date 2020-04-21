@@ -1,25 +1,25 @@
 
 /*
 
-------------------------------------
-XBOX / NAMES / GameCube / SUPER NES
-------------------------------------
-0   -   A       -   1       -   1
-1   -   B       -   2       -   2
-2   -   X       -   0       -   0
-3   -   Y       -   3       -   3
-4   -   LB      -   .       -   4
-5   -   RB      -   7       -   5
-6   -   LT      -   4       -   .
-7   -   RT      -   5       -   .
-8   -   BACK    -   .       -   8
-9   -   START   -   9       -   9
-10  -   LSTICK  -   .       -   .
-11  -   RSTICK  -   .       -   .
-12  -   CROSSU  -   12      -   .
-13  -   CROSSD  -   14      -   .
-14  -   CROSSL  -   15      -   .
-15  -   CROSSR  -   13      -   .
+------------------------------------------------------------------------
+XBOX / NAMES / GameCube / SUPER NES / JOYC-L / JOYC-R
+------------------------------------------------------------------------
+0   -   A       -   1       -   1   -   0   -   0
+1   -   B       -   2       -   2   -   2   -   2
+2   -   X       -   0       -   0   -   1   -   1
+3   -   Y       -   3       -   3   -   3   -   3
+4   -   LB      -   .       -   4   -   4   -   4
+5   -   RB      -   7       -   5   -   5   -   5
+6   -   LT      -   4       -   .   -   .   -   .
+7   -   RT      -   5       -   .   -   .   -   .
+8   -   BACK    -   .       -   8   -   13  -   12
+9   -   START   -   9       -   9   -   8   -   9
+10  -   LSTICK  -   .       -   .   -   10  -   11
+11  -   RSTICK  -   .       -   .   -   .   -   .
+12  -   CROSSU  -   12      -   .   -   .   -   .
+13  -   CROSSD  -   14      -   .   -   .   -   .
+14  -   CROSSL  -   15      -   .   -   .   -   .
+15  -   CROSSR  -   13      -   .   -   .   -   .
 ------------------------------------
 XBOX / NAMES / GameCube / SUPER NES
 ------------------------------------
@@ -109,6 +109,12 @@ export class InputComponent implements Component {
     private readonly buttonsSuperNes:number[] = [1,2,0,3,4,5,-1,-1,8,9,-1,-1,-1,-1,-1,-1];
     private readonly axisSuperNes:number[] = [0,1,-1,-1];
 
+    private readonly buttonsJoyConL:number[] = [0,2,1,3,4,5,-1,-1,13,8,10,-1,-1,-1,-1,-1];
+    private readonly axisJoyConL:number[] = [-1,-1,-1,-1];
+
+    private readonly buttonsJoyConR:number[] = [0,2,1,3,4,5,-1,-1,12,9,11,-1,-1,-1,-1,-1];
+    private readonly axisJoyConR:number[] = [-1,-1,-1,-1];
+
 
 
     //-------------------------------------------------------------------------------------
@@ -134,6 +140,20 @@ export class InputComponent implements Component {
                 // Translate button number
                 result = this.axisSuperNes[axiNum];
             }
+            //----------------------------------
+            // -----  SWITCH JOY CON LEFT  -----
+            //----------------------------------
+            if( name.includes('057e-2006-Wireless') ){
+                // Translate button number
+                result = this.axisJoyConL[axiNum];
+            }
+            //-----------------------------------
+            // -----  SWITCH JOY CON RIGHT  -----
+            //-----------------------------------
+            if( name.includes('057e-2007-Wireless') ){
+                // Translate button number
+                result = this.axisJoyConR[axiNum];
+            }
         }
         return result;
     }
@@ -156,6 +176,20 @@ export class InputComponent implements Component {
             if( name.includes('0810-e501-usb') ){
                 // Translate button number
                 result = this.buttonsSuperNes[butNum];
+            }
+            //----------------------------------
+            // -----  SWITCH JOY CON LEFT  -----
+            //----------------------------------
+            if( name.includes('057e-2006-Wireless') ){
+                // Translate button number
+                result = this.buttonsJoyConL[butNum];
+            }
+            //-----------------------------------
+            // -----  SWITCH JOY CON RIGHT  -----
+            //-----------------------------------
+            if( name.includes('057e-2007-Wireless') ){
+                // Translate button number
+                result = this.buttonsJoyConR[butNum];
             }
         }
         return result;
